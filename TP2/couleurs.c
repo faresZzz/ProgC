@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
+//Initialisation du struct
 typedef struct couleur{
    int R;
    int G; 
@@ -10,6 +11,7 @@ typedef struct couleur{
 
 int main()
 {
+    //Déclaration des couleurs
     int tab_couleur[10][4] ={
         {0xFF, 0x57, 0x33, 0xA8},
         {0xC7, 0xFF, 0x33, 0x12},
@@ -28,6 +30,7 @@ int main()
     
     couleur liste_couleur[10];
     
+    //On remplit liste_couleur avec les éléments RGBA du tableau
     for (int i = 0; i < 10; i++)
     {
         
@@ -36,6 +39,8 @@ int main()
        liste_couleur[i].B = tab_couleur[i][2];
        liste_couleur[i].A = tab_couleur[i][3];
     }
+
+    //On affiche les couleurs en notation hex
     for (int i = 0; i < 10; i++)
     {
         printf("couleur (R,G,B,A), (0x%x, 0x%x, 0x%x, 0x%x)\n", liste_couleur[i].R, liste_couleur[i].G, liste_couleur[i].B, liste_couleur[i].A);
