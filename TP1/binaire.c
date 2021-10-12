@@ -1,9 +1,9 @@
 #include <stdio.h>
 
-// probleme sur certain chiffre comme 2048 ou 4096
+// problème sur certains chiffres comme 2048 ou 4096
 int main()
 {
-    int valeur = 2048;
+    int valeur = 208;
     int binaireval[8*sizeof(int)]; 
     int i;
     printf("la valeur binaire de %d est: ", valeur);
