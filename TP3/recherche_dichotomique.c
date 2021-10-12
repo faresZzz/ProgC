@@ -44,12 +44,12 @@ void dichotomie(int *ptr_tab, int size, int chercher)
         }
         else
         {
-            printf("L'entier rechercher est present dans le tableau");
+            printf("L'entier recherché est présent dans le tableau");
             exit(0);
         }
         
     }
-    printf("L'entier rechercher n\'est pas dans le tableau");
+    printf("L'entier recherché n\'est pas dans le tableau");
     
 }
 int main()
@@ -66,7 +66,7 @@ int main()
        
     }
     triPlus(tab_int, sizeof(tab_int)/sizeof(int));    
-   printf("Entrer le nombre a chercher:");
+   printf("Entrer le nombre à chercher:");
    scanf("%d", &chercher);
     
     

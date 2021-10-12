@@ -69,7 +69,7 @@ int main()
 
     }
 
-    printf("LISTE DES COULEUR AVEC LEUR OCCURENCE\n");
+    printf("LISTE DES COULEURS AVEC LEURS OCCURENCES\n\n");
     for (int i = 0; i< stack_couleur; i++)
     {
         printf(" couleur: (%s)\toccurence: %d\n", liste_couleur[i].valeur, liste_couleur[i].occurence);

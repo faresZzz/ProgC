@@ -3,6 +3,7 @@
 #include <time.h>
 #include <stdlib.h>
 
+//Nous avons réalisé 3 méthodes de tri différentes pour cet exercice.
 
 int *pmin( int *tab_min, int size_min)
 {
@@ -115,7 +116,7 @@ int main()
        
     }
     
-    triTop( tab_int, sizeof(tab_int)/sizeof(int));
+    triPlus( tab_int, sizeof(tab_int)/sizeof(int));
     
     for (int i = 0; i < 100; i++)
     {

@@ -17,7 +17,7 @@ int main()
        
     }
     
-   printf("Entrer le nombre a chercher:");
+   printf("Entrer le nombre à chercher:");
    scanf("%d", &chercher);
     
     for (int i = 0; i < 100; i++)
@@ -36,11 +36,11 @@ int main()
     printf("\n");
     if (present)
     {
-         printf("L'entier recherche est present dans le tableau");
+         printf("L'entier recherché est présent dans le tableau");
     }
     else
     {
-        printf("L'entier ne se trouve pas dans le tableau");
+        printf("L'entier recherché ne se trouve pas dans le tableau");
     }
     printf("\n");
    

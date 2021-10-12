@@ -39,16 +39,16 @@ int compareStr(char *mot1, int taille_mot1, char *mot2, int taille_mot2)
 
 int main()
 {
-    char tab_phrase[10][50] = {"Bonjour a tous",
+    char tab_phrase[10][50] = {"Bonjour à tous",
                             "Comment allez-vous",
-                            "Hello  world",
+                            "Hello world",
                             "come on guys", 
                             "Je suis passe chez so", 
                             "Michel aime se promener",
                             "Je suis pas venu pour rien",
                             "Il faut se connecter avec la nature",
                             "Pour la daronne",
-                            "N'est pas ingenieur qui veux"
+                            "N'est pas ingénieur qui veut"
                             };
 
 
@@ -57,7 +57,7 @@ int main()
     char cherche[50];
     int valide;
 
-    printf("Entrer la phrase a chercher: ");
+    printf("Entrer la phrase à chercher: ");
     scanf("%[^\n]", &cherche);
 
     for (int i = 0; i < 10; i++)
@@ -65,10 +65,10 @@ int main()
         valide =  compareStr(cherche, sizeof(cherche)/sizeof(char), tab_phrase[i], sizeof(tab_phrase[i])/sizeof(char));
         if (valide)
         {
-            printf("Le mot est present dans la liste \n");
+            printf("La phrase est présente dans la liste \n");
             exit(0);
         }
     }
-    printf("Le mot n'est pas present dans la liste\n");
+    printf("La phrase n'est pas présente dans la liste\n");
     return 0;
 }
