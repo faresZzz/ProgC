@@ -1,3 +1,8 @@
+/*
+Auteurs : Farès ZAGHOUANE, Maxime CURRAL
+Rendu le 12/10/2021 dans le cadre du module "Programmation en C"
+CPE LYON
+*/
 #include <stdio.h>
 
 // problème sur certains chiffres comme 2048 ou 4096
