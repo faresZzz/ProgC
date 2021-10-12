@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// probleme sur certain chiffres comme 2048 ou 4096
+// problème sur certains chiffres comme 2048 ou 4096
 int main()
 {
     int valeur = 208;
