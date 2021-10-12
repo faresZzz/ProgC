@@ -3,7 +3,10 @@
 
 int main()
 {
+    //On initialise la chaîne
     char chaine[] ="Bonjour à tous";
+    
+    //On calcule la taille de la chaîne
     int taille = sizeof(chaine)/sizeof(char);
     printf("taille de la chaîne \"%s\": %lu\n", chaine, sizeof(chaine)/sizeof(char)-1);
     
@@ -11,6 +14,7 @@ int main()
     char copie_chaine[taille];
     int taille_copie = sizeof(copie_chaine)/sizeof(char);
 
+    //On copie la chaîne dans la variable *copie_chaine*
     for(int i = 0; i < taille; i++)
     {
         copie_chaine[i] = chaine[i];
@@ -21,6 +25,8 @@ int main()
     /////////////////////////////////////////////////////////
     char concatenation[taille+taille_copie];
     int j;
+
+    //On concatène *chaine* à *copie_chaine* pour obtenir *concatenation*
     for (j = 0; j<taille-1; j++)
     {
         concatenation[j] = chaine[j];
