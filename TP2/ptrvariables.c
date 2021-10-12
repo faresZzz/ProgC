@@ -2,6 +2,7 @@
 
 int main(){
 
+    //On déclare des variables de plusieurs types et à chaque fois un pointeur leur correspondant
     char a = 19;
     char *ptr_char =&a;
 
@@ -27,6 +28,7 @@ int main(){
     long double *ptr_longdouble = &h;
 
 
+    //On affiche pour chaque variable son adresse et sa valeur avec son pointeur
     printf("char adresse : %p\n",ptr_char);
     printf("char : %i\n\n", *ptr_char);
 
