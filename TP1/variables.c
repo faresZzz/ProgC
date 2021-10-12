@@ -3,6 +3,7 @@
 
 int main(){
 
+//Initialisation des variables
     char a = "a";
     short b = 10;
     int c = 50;
@@ -18,6 +19,7 @@ int main(){
     unsigned long int l = 245523;
     unsigned long long int m = 4353324;
 
+//Affichage des valeurs des variables
     printf("char : %ld\n", sizeof(a));
     printf("short : %ld\n", sizeof(b));
     printf("int : %ld\n", sizeof(c));

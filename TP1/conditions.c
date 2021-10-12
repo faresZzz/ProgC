@@ -3,6 +3,8 @@
 
 int main()
 {
+    //On utilise la structure switch/case pour choisir la question
+    //Ici, la question 3 est choisie
     int question = 3;
     switch(question)
     {
