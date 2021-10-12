@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 
 int compareStr(char *mot1, int taille_mot1, char *mot2, int taille_mot2)
 {
@@ -9,18 +9,18 @@ int compareStr(char *mot1, int taille_mot1, char *mot2, int taille_mot2)
     {
         for (int i = 0; i < taille_mot1; i++ )
         {
-            if (((*(mot1 + i) == NULL)  && (*(mot2 + i) != NULL)) ||  ((*(mot1 + i) != NULL)  && (*(mot2 + i) == NULL)))
+            if (( ( (*(mot1 + i)) == NULL )  && ( (*(mot2 + i)) != NULL )) ||  (( (*(mot1 + i)) != NULL )  && ((*(mot2 + i)) == NULL)))
             {
                 valide = 0; 
                 break;
             }
-            else if (((*(mot1 + i) == NULL)  && (*(mot2 + i) == NULL)))
+            else if (( ( (*(mot1 + i)) == NULL )  && ((*(mot2 + i)) == NULL)))
             {
                 break;
             }
             else
             {
-                if (*(mot1 + i) != *(mot2 + i) )
+                if ((*(mot1 + i)) != (*(mot2 + i)) )
                 { 
                     valide = 0;
                     break;

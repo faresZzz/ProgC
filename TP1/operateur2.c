@@ -35,12 +35,12 @@ int main(){
             printf("a&b = %d\n", num1&num2);
             break;
 
-        case '|' :
-            printf("a|b = %d\n", num1|num2);
+        case '||' :
+            printf("a|b = %d\n", num1||num2);
             break;
 
         case '~' :
-            printf("a~b = %d\n", ~num1);
+            printf("a~b = %d\n", !num1);
             break;
     }
 }
