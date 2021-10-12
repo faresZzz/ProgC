@@ -1,21 +1,21 @@
 #include <stdio.h>
 
-short var_short = 17476;
+short var_short = 176;
 char* point_Short = (char*)&var_short;
 
-int var_int = 1145324612;
+int var_int = 824612;
 char* point_Int = (char*)&var_int;
 
-long int var_long_int = 4919131752989213764;
+long int var_long_int = 4919138989213764;
 char* point_Long_Int = (char*)&var_long_int;
 
-float var_float = 44;
+float var_float = 23;
 char* point_Float = (char*)&var_float;
 
-double var_double = 44;
+double var_double = 14;
 char* point_Double = (char*)&var_double;
 
-long double var_long_double = 44;
+long double var_long_double = 49;
 char* point_Long_Double = (char*)&var_long_double;
 
 int main(){
