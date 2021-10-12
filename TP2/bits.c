@@ -12,11 +12,11 @@ int main()
     
     if (vingt%2 == 1 && quatre % 2 == 1)
     {
-        printf("Le 20eme et le 4eme bit du chiffre(%d) sont a 1",chiffre);
+        printf("Le 20° et le 4° bit du chiffre(%d) sont à 1",chiffre);
     }
     else
     {
-        printf("les bits ne correspondes pas");    
+        printf("les bits ne correspondent pas");    
     }
     return 0;
     
