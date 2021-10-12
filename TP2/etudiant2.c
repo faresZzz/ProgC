@@ -29,7 +29,7 @@ int main()
     }
     for (int i = 0; i < 5; i++)
     {
-        printf("Bonjour je suis %s %s, j\'habite a %s, mes notes en programmation en C et Systeme sont: %d, %d\n", liste_etudiant[i].nom, liste_etudiant[i].prenom, liste_etudiant[i].ville, liste_etudiant[i].progC, liste_etudiant[i].systeme);
+        printf("Bonjour je suis %s %s, j\'habite à %s, mes notes en Programmation en C et Système d'exploitation sont: %d, %d\n", liste_etudiant[i].nom, liste_etudiant[i].prenom, liste_etudiant[i].ville, liste_etudiant[i].progC, liste_etudiant[i].systeme);
     }
     
     

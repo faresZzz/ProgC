@@ -3,9 +3,9 @@
 
 int main()
 {
-    char chaine[] ="Bonjour a tous";
+    char chaine[] ="Bonjour à tous";
     int taille = sizeof(chaine)/sizeof(char);
-    printf("taille de la chaine \"%s\": %lu\n", chaine, sizeof(chaine)/sizeof(char)-1);
+    printf("taille de la chaîne \"%s\": %lu\n", chaine, sizeof(chaine)/sizeof(char)-1);
     
     /////////////////////////////////////////////////////////
     char copie_chaine[taille];
@@ -30,7 +30,7 @@ int main()
     {
         concatenation[k + j] = copie_chaine[k];
     }
-    printf("Concatenation: %s\n", concatenation);
+    printf("Concaténation: %s\n", concatenation);
     printf("\n");
     return 0;
     
