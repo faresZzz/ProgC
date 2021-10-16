@@ -1,19 +1,23 @@
 #include <stdio.h>
+#include <string.h>
 #include "operator.h"
 
 
 
-int main()
+
+int main(int argc, char ** argv)
 {
+    char op;
+    int num1, num2;
 
-    int num1 = 11;
-    int num2 = 17;
-    char op = '-';
+    if (argc > 1)
+    {
+        strcpy(op, argv[1]);
+        num1 = (int) *argv[2];
+        num2 = (int) *argv[3];
 
-    printf("a = %d\n", num1);
-    printf("b = %d\n", num2);
-
-    switch(op){
+        switch(op)
+        {
         case '+' :
             printf("a+b = %d\n", somme(num1, num2));
             break;
@@ -45,5 +49,12 @@ int main()
         case '~' :
             printf("a~b = %d\n", negation(num1));
             break;
+        }
     }
+    else
+    {
+        printf("Erreur veuillez entrer des parametres\n");
+    }
+
+    return 0;
 }
