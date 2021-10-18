@@ -28,7 +28,7 @@ int modulo(int num1, int num2)
 
 int etLogique(int num1, int num2)
 {
-    return num1 & num2;
+    return num1 && num2;
 }
 
 int ouLogique(int num1, int num2)
