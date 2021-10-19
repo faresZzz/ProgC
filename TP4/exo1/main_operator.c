@@ -8,7 +8,7 @@ int main()
 
     int num1 = 11;
     int num2 = 17;
-    char op = '*';
+    char op = '-';
 
     printf("a = %d\n", num1);
     printf("b = %d\n", num2);
