@@ -13,13 +13,12 @@ typedef struct couleur{
    int G;
    int B;
    int A;
-
+ struct couleur *next;
 }couleur;
 
 typedef struct liste_couleurs
 {
-    struct couleur *self;
-    struct couleur *next;
+    struct courleur *first;
 }liste_couleurs;
 
 int main()

@@ -22,9 +22,9 @@ int main()
     case 'r':
         lire_fichier(ptr_fichier);
         break;
-    
+
     case 'w':
-        
+
         printf("Entrer votre phrase:");
         scanf("%[^\n]", &message);
         ecrire_dans_fichier(ptr_fichier, ptr_message);
