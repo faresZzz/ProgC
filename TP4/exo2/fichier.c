@@ -9,7 +9,8 @@ char lire_fichier(char *nom_fichier)
 {
     char content;
     int fd, size;
-    fd = open(*nom_fichier, O_RDONLY);
+    fd = open(
+        nom_fichier, O_RDONLY);
 
     while (1)
     {
@@ -29,7 +30,7 @@ char ecrire_dans_fichier(char *nom_fichier, char *message)
 {
 
     int fd, count, size;
-    fd = open (*nom_fichier, O_CREAT|O_WRONLY, S_IRUSR|S_IWUSR);
+    fd = open (nom_fichier, O_CREAT|O_WRONLY, S_IRUSR|S_IWUSR);
     size = write(fd, message, strlen(message));
     close(fd);
 }
@@ -37,7 +38,7 @@ char ecrire_dans_fichier(char *nom_fichier, char *message)
 int main()
 {
     char *fichier = "fichier.txt";
-    lire_fichier(*fichier);
+    lire_fichier(fichier);
     return 0;
 
 }

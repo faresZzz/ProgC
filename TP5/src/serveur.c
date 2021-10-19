@@ -5,7 +5,7 @@
  *
  */
 
-#include <sys/types.h> 
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/epoll.h>
 #include <netinet/in.h>
@@ -15,17 +15,38 @@
 #include <unistd.h>
 
 #include "serveur.h"
+#include "calcul.h"
 
 /* renvoyer un message (*data) au client (client_socket_fd)
  */
 int renvoie_message(int client_socket_fd, char *data) {
   int data_size = write (client_socket_fd, (void *) data, strlen(data));
-      
+
   if (data_size < 0) {
     perror("erreur ecriture");
     return(EXIT_FAILURE);
   }
 }
+
+
+int recois_numero_calcule(int client_socket_fd, char *data)
+{
+  char op;
+  int num1, num2, result;
+
+  sscanf(data, "calcul: %c %d %d", &op, &num1, &num2 );
+  printf("%c %d %d \n", op, num1, num2);
+  result = calcul(op, num1, num2);
+  char value[100];
+  sprintf(value, "%d", result );
+  memset(data, 0, sizeof(data));
+  strcpy(data, "calcul: ");
+  strcat(data, value);
+
+  renvoie_message(client_socket_fd, data);
+
+}
+
 
 /* accepter la nouvelle connection d'un client et lire les données
  * envoyées par le client. En suite, le serveur envoie un message
@@ -36,7 +57,7 @@ int recois_envoie_message(int socketfd) {
   char data[1024];
 
   int client_addr_len = sizeof(client_addr);
- 
+
   // nouvelle connection de client
   int client_socket_fd = accept(socketfd, (struct sockaddr *) &client_addr, &client_addr_len);
   if (client_socket_fd < 0 ) {
@@ -49,28 +70,46 @@ int recois_envoie_message(int socketfd) {
 
   //lecture de données envoyées par un client
   int data_size = read (client_socket_fd, (void *) data, sizeof(data));
-      
+
+
+
   if (data_size < 0) {
     perror("erreur lecture");
     return(EXIT_FAILURE);
   }
-  
+
   /*
-   * extraire le code des données envoyées par le client. 
+   * extraire le code des données envoyées par le client.
    * Les données envoyées par le client peuvent commencer par le mot "message :" ou un autre mot.
    */
   printf ("Message recu: %s\n", data);
   char code[10];
   sscanf(data, "%s:", code);
 
-  //Si le message commence par le mot: 'message:' 
+
+
+
+  //Si le message commence par le mot: 'message:'
   if (strcmp(code, "message:") == 0) {
+    //Permet a l'utilisateur cote serveur de saisir un message qui vas etre renvoyer au client
+    memset(data, 0, sizeof(data));
+    char message[100];
+    printf("Votre message (max 100 caracteres): ");
+    fgets(message, 100, stdin);
+    strcpy(data, "message: ");
+    strcat(data, message);
+
     renvoie_message(client_socket_fd, data);
   }
+  //Si le message commence par le mot: 'calcul:'
+  if (strcmp(code, "calcul:") == 0) {
+    recois_numero_calcule(client_socket_fd, data);
+  }
 
-  //fermer le socket 
+  //fermer le socket
   close(socketfd);
 }
+
 
 int main() {
 
@@ -104,7 +143,7 @@ int main() {
     perror("bind");
     return(EXIT_FAILURE);
   }
- 
+
   // Écouter les messages envoyés par le client
   listen(socketfd, 10);
 

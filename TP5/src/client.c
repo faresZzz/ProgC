@@ -9,19 +9,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/types.h>  
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 
 #include "client.h"
 
-/* 
+/*
  * Fonction d'envoi et de réception de messages
  * Il faut un argument : l'identifiant de la socket
  */
 
 int envoie_recois_message(int socketfd) {
- 
+
   char data[1024];
   // la réinitialisation de l'ensemble des données
   memset(data, 0, sizeof(data));
@@ -29,11 +29,11 @@ int envoie_recois_message(int socketfd) {
 
   // Demandez à l'utilisateur d'entrer un message
   char message[100];
-  printf("Votre message (max 1000 caracteres): ");
-  fgets(message, 1024, stdin);
+  printf("Votre message (max 100 caracteres): ");
+  fgets(message, 100, stdin);
   strcpy(data, "message: ");
   strcat(data, message);
-  
+
   int write_status = write(socketfd, data, strlen(data));
   if ( write_status < 0 ) {
     perror("erreur ecriture");
@@ -52,9 +52,49 @@ int envoie_recois_message(int socketfd) {
   }
 
   printf("Message recu: %s\n", data);
- 
+
   return 0;
 }
+
+
+int envoie_operateur_numeros(int socketfd)
+{
+  char data[1024];
+  // la réinitialisation de l'ensemble des données
+  memset(data, 0, sizeof(data));
+
+
+  // Demandez à l'utilisateur d'entrer un message
+  char message[100];
+  printf("Votre calcul 'operateur' num1 num 2: ");
+  fgets(message, 100, stdin);
+  strcpy(data, "calcul: ");
+  strcat(data, message);
+
+  int write_status = write(socketfd, data, strlen(data));
+  if ( write_status < 0 ) {
+    perror("erreur ecriture");
+    exit(EXIT_FAILURE);
+  }
+
+  // la réinitialisation de l'ensemble des données
+  memset(data, 0, sizeof(data));
+
+
+  // lire les données de la socket
+  int read_status = read(socketfd, data, sizeof(data));
+  if ( read_status < 0 ) {
+    perror("erreur lecture");
+    return -1;
+  }
+
+  char reponse[100];
+  sscanf(data, "calcul: %s", reponse );
+  printf("calcule: %s\n", reponse);
+
+  return 0;
+}
+
 
 int main() {
   int socketfd;
@@ -83,9 +123,31 @@ int main() {
     perror("connection serveur");
     exit(EXIT_FAILURE);
   }
+  char commande;
 
-  // appeler la fonction pour envoyer un message au serveur
-  envoie_recois_message(socketfd);
+  printf("Voulez vous envoyer un message ou un calcul:[m/c] ");
+  scanf("%c", &commande);
+
+  //  clear buffer scanf
+  int c;
+  while((c = getchar()) != '\n' && c !=EOF){ }
+
+  switch(commande)
+  {
+    case 'm':
+      // appeler la fonction pour envoyer un message au serveur
+      envoie_recois_message(socketfd);
+      break;
+
+    case 'c':
+      // appeler la fonction pour envoyer un calcul
+      envoie_operateur_numeros(socketfd);
+      break;
+
+    default:
+      printf("Erreur veuiller saisir [m/c] afin d'executer une operation\n");
+  }
+
 
   close(socketfd);
 }

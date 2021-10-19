@@ -15,8 +15,8 @@ int main(int argc, char ** argv)
     if (argc > 1)
     {
         strcpy(ptr_op, argv[1]);
-       
-        
+
+
 
         switch(op)
         {
