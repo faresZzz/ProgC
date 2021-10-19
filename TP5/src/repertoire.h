@@ -1,0 +1,1 @@
+void lire_dossier(char *nom_dossier);
