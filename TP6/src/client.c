@@ -9,20 +9,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <sys/types.h>  
+#include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 
 #include "client.h"
 #include "bmp.h"
 
-/* 
+/*
  * Fonction d'envoi et de réception de messages
  * Il faut un argument : l'identifiant de la socket
  */
 
 int envoie_recois_message(int socketfd) {
- 
+
   char data[1024];
   // la réinitialisation de l'ensemble des données
   memset(data, 0, sizeof(data));
@@ -34,7 +34,7 @@ int envoie_recois_message(int socketfd) {
   fgets(message, 1024, stdin);
   strcpy(data, "message: ");
   strcat(data, message);
-  
+
   int write_status = write(socketfd, data, strlen(data));
   if ( write_status < 0 ) {
     perror("erreur ecriture");
@@ -53,24 +53,29 @@ int envoie_recois_message(int socketfd) {
   }
 
   printf("Message recu: %s\n", data);
- 
+
   return 0;
 }
 
-void analyse(char *pathname, char *data) {
+void analyse(char *pathname, char *data, char *num) {
   //compte de couleurs
   couleur_compteur *cc = analyse_bmp_image(pathname);
 
   int count;
+  char temp_string[10];
+  int numero = atoi(num);
   strcpy(data, "couleurs: ");
-  char temp_string[10] = "10,";
-  if (cc->size < 10) {
+  strcpy(temp_string, num);
+  strcat(temp_string, ", ");
+
+
+  if (cc->size < numero) {
     sprintf(temp_string, "%d,", cc->size);
   }
   strcat(data, temp_string);
-  
+
   //choisir 10 couleurs
-  for (count = 1; count < 11 && cc->size - count >0; count++) {
+  for (count = 1; count < numero && cc->size - count >0; count++) {
     if(cc->compte_bit ==  BITS32) {
       sprintf(temp_string, "#%02x%02x%02x,", cc->cc.cc24[cc->size-count].c.rouge,cc->cc.cc32[cc->size-count].c.vert,cc->cc.cc32[cc->size-count].c.bleu);
     }
@@ -84,11 +89,11 @@ void analyse(char *pathname, char *data) {
   data[strlen(data)-1] = '\0';
 }
 
-int envoie_couleurs(int socketfd, char *pathname) {
+int envoie_couleurs(int socketfd, char *pathname, char *num) {
   char data[1024];
   memset(data, 0, sizeof(data));
-  analyse(pathname, data);
-  
+  analyse(pathname, data, num);
+
   int write_status = write(socketfd, data, strlen(data));
   if ( write_status < 0 ) {
     perror("erreur ecriture");
@@ -126,8 +131,14 @@ int main(int argc, char **argv) {
     perror("connection serveur");
     exit(EXIT_FAILURE);
   }
+  if (argc < 3)
+  {
+    // valeur par defaut = 10
+    char val[] = "10";
+    envoie_couleurs(socketfd, argv[1], val);
+  }
   //envoie_recois_message(socketfd);
-  envoie_couleurs(socketfd, argv[1]);
+  envoie_couleurs(socketfd, argv[1], argv[2]);
 
   close(socketfd);
 }

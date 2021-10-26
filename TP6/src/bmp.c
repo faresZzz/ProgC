@@ -8,9 +8,9 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <unistd.h> 
-#include <stdio.h> 
-#include <stdlib.h> 
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "bmp.h"
 
@@ -23,7 +23,7 @@ couleur_compteur * analyse_bmp_image(char *nom_de_fichier) {
   couleur_compteur * cc = NULL;
 
   // l'ouverture du fichier pour la lecture
-  int fd = open(nom_de_fichier, O_RDONLY);  
+  int fd = open(nom_de_fichier, O_RDONLY);
   printf("%s",nom_de_fichier);
   if (fd < 0) {
     perror("Erreur: open");
@@ -53,8 +53,8 @@ couleur_compteur * analyse_bmp_image(char *nom_de_fichier) {
     perror("Erreur: read");
     return(NULL);
   }
-  
-  //Se positionner correctement pour commencer à lire les couleurs 
+
+  //Se positionner correctement pour commencer à lire les couleurs
   off_t offset = lseek(fd, bheader.offset, SEEK_SET);
   if (offset != bheader.offset) {
     perror("Erreur: lseek");
@@ -93,8 +93,8 @@ couleur_compteur * analyse_bmp_image(char *nom_de_fichier) {
     cc = compte_couleur(&c, binfo_header.taille_image/3);
     trier_couleur_compteur(cc);
   }
- 
+
   close(fd);
 
-  return cc; 
+  return cc;
 }
