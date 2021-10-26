@@ -18,7 +18,7 @@ typedef struct couleur{
 
 typedef struct liste_couleurs
 {
-    struct courleur *first;
+    struct couleur *first;
 }liste_couleurs;
 
 int main()
@@ -60,24 +60,23 @@ int main()
 
 
     liste_couleurs new;
+    new.first = &liste_couleur[0];
 
-    for (int i = 0; i < 10; i++)
+    for (int i = 1; i < 10; i++)
     {
-        if (i+1 < 10)
+        if (i < 9)
         {
-            new.self = &liste_couleur[i];
-            new.next = &liste_couleur[i+1];
+            liste_couleur[i].next = &liste_couleur[i + 1];
         }
         else
         {
-            new.self = &liste_couleur[i];
-            new.next = NULL;
+            liste_couleur[i].next = NULL;
         }
     }
-    struct liste_couleur *cptr = &new;
+    struct liste_couleur *cptr = &liste_couleur[0];
     while(cptr != NULL)
     { //navigation
-        printf( "cptr->self: (0x%x, 0x%x, 0x%x, 0x%x)\n", cptr->self->R, cptr->self->G, cptr->self->B, cptr->self->A );
+        printf( "couleur: (0x%x, 0x%x, 0x%x, 0x%x)\n", cptr->R, cptr->G, cptr->B, cptr->A );
         cptr = cptr->next; //couleur suivante
     }
 

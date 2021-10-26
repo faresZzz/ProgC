@@ -7,6 +7,6 @@ int main (int argc, char ** argv){
     printf("Usage: readdir path\n");
     }
 
-    lire_dossier(argv[1]);
+    lire_dossier_recursif(argv[1]);
     return 0;
 }
