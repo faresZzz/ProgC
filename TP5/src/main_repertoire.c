@@ -7,6 +7,9 @@ int main (int argc, char ** argv){
     printf("Usage: readdir path\n");
     }
 
-    lire_dossier(argv[1]);
+    //lire_dossier(argv[1]);
+    int niveau = 0; //Initialise le niveau de l'arborescence pour l'indentation
+    lire_dossier_recursif(argv[1], niveau);
+
     return 0;
 }
