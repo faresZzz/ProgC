@@ -6,7 +6,7 @@
 void main (int argc, char ** argv)
 {
 
-    const int exercice = 2; //On choisit l'exercice : 1 pour 5.1, 2 pour 5.2 et 3 pour 5.3
+    const int exercice = 3; //On choisit l'exercice : 1 pour 5.1, 2 pour 5.2 et 3 pour 5.3
 
     //On vérifie que l'utilisateur a entré un nom de dossier en paramètre
     if (argc < 2)
@@ -23,5 +23,7 @@ void main (int argc, char ** argv)
             int niveau = 0; //Initialise le niveau de l'arborescence pour l'indentation
             lire_dossier_recursif(argv[1], niveau);
             break;
+        case 3:
+        lire_dossier_iteratif(argv[1]);
     }
 }

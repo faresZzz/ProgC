@@ -94,3 +94,64 @@ void lire_dossier_recursif(char *nom_dossier, int niveau) {
         }
     }
 }
+
+
+
+
+//fonction de l'exercice 5.3
+void lire_dossier_iteratif( char *directory )
+{
+    DIR* dirp;
+    struct dirent* direntp;
+
+    char liste_chemins[50][1024] = {}; //On crée une liste pour stocker les chemins vers les sous-dossiers
+    int ptr = 0; //Compteur qui indique le nombre de sous-dossiers présents dans la liste
+    strcpy(liste_chemins[ptr] , directory);
+    ptr++;
+
+    // On continue le traitement tant qu'il reste des dossiers à traiter
+    while (ptr>0)
+    {
+        dirp = opendir( liste_chemins[0] );
+        if( dirp == NULL )
+        {
+            perror( "Nom de dossier invalide");
+        }
+        while(1)
+        {
+            direntp = readdir( dirp );
+            if( direntp == NULL )
+            {
+                break;
+            }
+            if ((strcmp(direntp->d_name , ".")!=0) && (strcmp(direntp->d_name , "..")!=0));
+            {
+                printf( "%s\n", direntp->d_name );
+            }
+            if ((direntp-> d_type == DT_DIR) && strcmp(direntp->d_name , ".")!=0 && strcmp(direntp->d_name , "..")!=0)
+            {
+                char path[128]= "" ;
+                strcpy(path,liste_chemins[0]);
+                strcat(path,"/");
+                strcat(path,direntp->d_name);
+                strcpy(liste_chemins[ptr],path); //On ajoute à la liste le chemin du dossier courant
+                ptr++;
+            }
+
+        }
+        char liste_tampon[50][1024]={}; // les 2 boucles for servent à supprimer le premier élément de la liste des chemins qui a été affiché pour afficher le suivant
+        for (int i = 1; i <= ptr-1 ; i++)
+        {
+            strcpy(liste_tampon[i-1],liste_chemins[i]);
+        }
+
+        for (int i = 0; i <= ptr-2; i++)
+        {
+            strcpy(liste_chemins[i],liste_tampon[i]);
+        }
+         printf("\tchemin: %s\n",liste_chemins[0]);
+        closedir( dirp );
+        ptr--;
+    }
+
+}
