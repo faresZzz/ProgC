@@ -162,9 +162,4 @@ int main() {
   recois_envoie_message(socketfd);
 
   return 0;
-<<<<<<< HEAD
 }
-=======
-}
-
->>>>>>> origin/TP5_fares

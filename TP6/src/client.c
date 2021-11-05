@@ -155,8 +155,5 @@ int main(int argc, char **argv) {
   // envoie_couleurs(socketfd, argv[1], argv[2]);
 
   close(socketfd);
-<<<<<<< HEAD
+  return 0;
 }
-=======
-}
->>>>>>> origin/TP5_fares
