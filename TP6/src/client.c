@@ -40,8 +40,8 @@ int envoie_recois_message(int socketfd) {
   char code[] = "message";
   printf("Votre message (max 1000 caracteres): ");
   fgets(message, 1024, stdin);
-  // strcpy(data, "message: ");
-  // strcat(data, message);
+  //  strcpy(data, "message: ");
+  //  strcat(data, message);
   format_message(data, code, message);
 
   int write_status = write(socketfd, data, strlen(data));
@@ -144,15 +144,19 @@ int main(int argc, char **argv) {
     exit(EXIT_FAILURE);
   }
 
-  // envoie_recois_message(socketfd);
-  if (argc < 3)
-  {
-    // valeur par defaut = 10
-    char val[] = "10";
-    envoie_couleurs(socketfd, argv[1], val);
-  }
-  //envoie_recois_message(socketfd);
-  envoie_couleurs(socketfd, argv[1], argv[2]);
+  envoie_recois_message(socketfd);
+  // if (argc < 3)
+  // {
+  //   // valeur par defaut = 10
+  //   char val[] = "10";
+  //   envoie_couleurs(socketfd, argv[1], val);
+  // }
+
+  // envoie_couleurs(socketfd, argv[1], argv[2]);
 
   close(socketfd);
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/TP5_fares
