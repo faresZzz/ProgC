@@ -1,22 +1,27 @@
-<<<<<<< HEAD
-=======
+
 #include <stdio.h>
 #include "repertoire.h"
+#include "repertoire.c"
 
-int main (int argc, char ** argv){
+void main (int argc, char ** argv)
+{
 
-    if (argc < 2) {
-    printf("Usage: readdir path\n");
+    const int exercice = 2; //On choisit l'exercice : 1 pour 5.1, 2 pour 5.2 et 3 pour 5.3
+
+    //On vérifie que l'utilisateur a entré un nom de dossier en paramètre
+    if (argc < 2)
+    {
+    printf("Pas assez d'arguments\n");
     }
 
-<<<<<<< HEAD
-    lire_dossier_recursif(argv[1]);
-=======
-    //lire_dossier(argv[1]);
-    int niveau = 0; //Initialise le niveau de l'arborescence pour l'indentation
-    lire_dossier_recursif(argv[1], niveau);
+    switch (exercice){
 
->>>>>>> f0c5ab703b9c21eb841bb034f1c617ea4f4997cf
-    return 0;
+        case 1:
+            lire_dossier(argv[1]);
+            break;
+        case 2:;
+            int niveau = 0; //Initialise le niveau de l'arborescence pour l'indentation
+            lire_dossier_recursif(argv[1], niveau);
+            break;
+    }
 }
->>>>>>> TP5_fares
