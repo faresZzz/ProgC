@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /*
  * SPDX-FileCopyrightText: 2021 John Samuel
  *
@@ -158,6 +156,3 @@ int main(int argc, char **argv) {
 
   close(socketfd);
 }
-
-
->>>>>>> TP5_fares

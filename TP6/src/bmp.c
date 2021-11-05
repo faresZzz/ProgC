@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 /*
  * SPDX-FileCopyrightText: 2021 John Samuel
  *
@@ -100,4 +98,3 @@ couleur_compteur * analyse_bmp_image(char *nom_de_fichier) {
 
   return cc;
 }
->>>>>>> TP5_fares
