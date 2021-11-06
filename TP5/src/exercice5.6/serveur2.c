@@ -66,7 +66,7 @@ int recois_envoie_message(int socketfd) {
     return(EXIT_FAILURE);
   }
 
-  while(1)
+  while(1) // lecture en continue sur le socket jusqu'a recevoir un message de FIN
   {
     // la réinitialisation de l'ensemble des données
     memset(data, 0, sizeof(data));
@@ -87,42 +87,47 @@ int recois_envoie_message(int socketfd) {
     */
     printf ("Message recu: %s\n", data);
     char code[10];
-    char message[100];
     sscanf(data, "%s:", code);
-    sscanf(data, ":%s", message);
-
-
-
 
     //Si le message commence par le mot: 'message:'
     if (strcmp(code, "message:") == 0) {
       //Permet a l'utilisateur cote serveur de saisir un message qui vas etre renvoyer au client
 
-      if(strcmp(code, "FIN:") == 0 )
-      {
-        memset(data, 0, sizeof(data));
-        strcpy(data, "message: ");
-        strcpy(message, "FIN!!");
-        strcat(data, message);
-        renvoie_message(client_socket_fd, data);
-        break;
-      }
-      else
-      {
-        memset(data, 0, sizeof(data));
-        char message[100];
-        printf("Votre message (max 100 caracteres): ");
-        fgets(message, 100, stdin);
-        strcpy(data, "message: ");
-        strcat(data, message);
-        renvoie_message(client_socket_fd, data);
-      }
+      // if(strcmp(fin, "FIN!!") == 0 )
+      // {
+      //   memset(data, 0, sizeof(data));
+      //   strcpy(data, "message: ");
+      //   strcpy(fin, "FIN!!");
+      //   strcat(data, fin);
+      //   renvoie_message(client_socket_fd, data);
+      //   break;
+      // }
+      // else
+      // {
+      memset(data, 0, sizeof(data));
+      char message[100];
+      printf("Votre message (max 100 caracteres): ");
+      fgets(message, 100, stdin);
+      strcpy(data, "message: ");
+      strcat(data, message);
+      renvoie_message(client_socket_fd, data);
+      // }
 
 
     }
     //Si le message commence par le mot: 'calcul:'
-    if (strcmp(code, "calcul:") == 0) {
+    else if (strcmp(code, "calcul:") == 0) {
       recois_numero_calcule(client_socket_fd, data);
+    }
+    else if (strcmp(code, "FIN!!") == 0)
+    {
+      char message[100];
+      memset(data, 0, sizeof(data));
+      strcpy(data, "message: ");
+      strcpy(message, "FIN!!");
+      strcat(data, message);
+      renvoie_message(client_socket_fd, data);
+      break;
     }
 
   }

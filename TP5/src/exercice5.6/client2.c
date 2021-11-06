@@ -42,7 +42,7 @@ int envoie_recois_message(int socketfd, char message[100]) {
   // char message[100];
   // printf("Votre message (max 100 caracteres): ");
   // fgets(message, 100, stdin);
-  // strcpy(data, "message: ");
+  //strcpy(data, "message:");
   strcat(data, message);
 
   int write_status = write(socketfd, data, strlen(data));
@@ -110,7 +110,7 @@ void notes_Eleves(int socketfd)
   Eleve liste_eleve[5];
   int liste_moyennes_matieres[] = {0, 0, 0, 0, 0};
 
-  for (int i = 0; i < 5 ; i++)
+  for (int i = 0; i < 5 ; i++) // on vient recupere tous les notes de chaque etudiant
   {
     sprintf(liste_eleve[i].path,"./etudiant/%d", i+1);
     for (int j = 0; j < 5; j++)
@@ -123,13 +123,13 @@ void notes_Eleves(int socketfd)
 
   }
 
-  for(int eleve = 0; eleve < 5; eleve++)
+  for(int eleve = 0; eleve < 5; eleve++) // on boucle sur chque eleve pour calculer sa moyenne. on fait en meme temps la moyenne par matiere
   {
       for (int note = 0; note < 5; note++)
       {
-        liste_eleve[eleve].moyenne += envoie_operateur_numeros(socketfd, '+',liste_eleve[eleve].moyenne, liste_eleve[eleve].notes[note] );
+        liste_eleve[eleve].moyenne = envoie_operateur_numeros(socketfd, '+',liste_eleve[eleve].moyenne, liste_eleve[eleve].notes[note] ); // moyenne de l'eleve
 
-        liste_moyennes_matieres[note] += envoie_operateur_numeros(socketfd, '+',liste_moyennes_matieres[note], liste_eleve[eleve].notes[note] );
+        liste_moyennes_matieres[note] = envoie_operateur_numeros(socketfd, '+',liste_moyennes_matieres[note], liste_eleve[eleve].notes[note] ); // moyenne dans la matiere
       }
       liste_eleve[eleve].moyenne = envoie_operateur_numeros(socketfd, '/',liste_eleve[eleve].moyenne, 5 );
   }
@@ -140,7 +140,7 @@ void notes_Eleves(int socketfd)
   }
 
 
-  envoie_recois_message(socketfd, "FIN");
+
 
 
   for (int k = 0; k < 5; k++)
@@ -155,10 +155,10 @@ void notes_Eleves(int socketfd)
                                                                             liste_eleve[k].notes[4],
                                                                             liste_eleve[k].moyenne);
 
-      printf("Moyenne dans la matiere %d: %d", k, liste_moyennes_matieres[k]);
+      printf("Moyenne dans la matiere %d: %d\n\n", k, liste_moyennes_matieres[k]);
     }
 
-
+  envoie_recois_message(socketfd, "FIN!!");
 
 }
 
