@@ -1,4 +1,5 @@
 
+int lire_fichier(char *fichier);
 
 void lire_dossier(char *nom_dossier);
 
