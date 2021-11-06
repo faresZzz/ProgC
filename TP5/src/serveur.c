@@ -53,59 +53,66 @@ int recois_numero_calcule(int client_socket_fd, char *data)
  * en retour
  */
 int recois_envoie_message(int socketfd) {
-  struct sockaddr_in client_addr;
-  char data[1024];
+  while(1)
+  {
+    struct sockaddr_in client_addr;
+    char data[1024];
 
-  int client_addr_len = sizeof(client_addr);
+    int client_addr_len = sizeof(client_addr);
 
-  // nouvelle connection de client
-  int client_socket_fd = accept(socketfd, (struct sockaddr *) &client_addr, &client_addr_len);
-  if (client_socket_fd < 0 ) {
-    perror("accept");
-    return(EXIT_FAILURE);
-  }
+    // nouvelle connection de client
+    int client_socket_fd = accept(socketfd, (struct sockaddr *) &client_addr, &client_addr_len);
+    if (client_socket_fd < 0 ) {
+      perror("accept");
+      return(EXIT_FAILURE);
+    }
 
-  // la réinitialisation de l'ensemble des données
-  memset(data, 0, sizeof(data));
-
-  //lecture de données envoyées par un client
-  int data_size = read (client_socket_fd, (void *) data, sizeof(data));
-
-
-
-  if (data_size < 0) {
-    perror("erreur lecture");
-    return(EXIT_FAILURE);
-  }
-
-  /*
-   * extraire le code des données envoyées par le client.
-   * Les données envoyées par le client peuvent commencer par le mot "message :" ou un autre mot.
-   */
-  printf ("Message recu: %s\n", data);
-  char code[10];
-  sscanf(data, "%s:", code);
-
-
-
-
-  //Si le message commence par le mot: 'message:'
-  if (strcmp(code, "message:") == 0) {
-    //Permet a l'utilisateur cote serveur de saisir un message qui vas etre renvoyer au client
+    // la réinitialisation de l'ensemble des données
     memset(data, 0, sizeof(data));
-    char message[100];
-    printf("Votre message (max 100 caracteres): ");
-    fgets(message, 100, stdin);
-    strcpy(data, "message: ");
-    strcat(data, message);
 
-    renvoie_message(client_socket_fd, data);
-  }
-  //Si le message commence par le mot: 'calcul:'
-  if (strcmp(code, "calcul:") == 0) {
-    recois_numero_calcule(client_socket_fd, data);
-  }
+    //lecture de données envoyées par un client
+    int data_size = read (client_socket_fd, (void *) data, sizeof(data));
 
+
+
+    if (data_size < 0) {
+      perror("erreur lecture");
+      return(EXIT_FAILURE);
+    }
+
+    /*
+    * extraire le code des données envoyées par le client.
+    * Les données envoyées par le client peuvent commencer par le mot "message :" ou un autre mot.
+    */
+    printf ("Message recu: %s\n", data);
+    char code[10];
+    sscanf(data, "%s:", code);
+
+
+
+
+    //Si le message commence par le mot: 'message:'
+    if (strcmp(code, "message:") == 0) {
+      //Permet a l'utilisateur cote serveur de saisir un message qui vas etre renvoyer au client
+      memset(data, 0, sizeof(data));
+      char message[100];
+      printf("Votre message (max 100 caracteres): ");
+      fgets(message, 100, stdin);
+      strcpy(data, "message: ");
+      strcat(data, message);
+
+      renvoie_message(client_socket_fd, data);
+    }
+    //Si le message commence par le mot: 'calcul:'
+    if (strcmp(code, "calcul:") == 0) {
+      recois_numero_calcule(client_socket_fd, data);
+    }
+
+    if (strcmp(code, "fin") == 0) {
+      break;
+    }
+
+  }
   //fermer le socket
   close(socketfd);
 }

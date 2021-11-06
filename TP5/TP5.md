@@ -33,7 +33,7 @@ le nom du répertoire.
 
 Ajoutez la déclaration suivante en repertoire.h
 ```
-void lire_dossier(char *);             
+void lire_dossier(char *);
 ```
 
 Implémentez cette fonction en *repertoire.c* qui parcourt le répertoire
@@ -48,7 +48,7 @@ répertoires, si aucun) dans ce répertoire. Vous pouvez utiliser `opendir`,
 Ajoutez la déclaration suivante en *repertoire.h*
 
 ```
-void lire_dossier_recursif(char *);             
+void lire_dossier_recursif(char *);
 ```
 
 Implémentez la fonction en *repertoire.c* qui parcourt le répertoire saisi
@@ -57,7 +57,7 @@ fichiers, des répertoires, des sous-répertoires et des fichiers dans les
 sous-répertoires. Pour mieux comprendre cette question, testez
 
 ```
-$ ls -R              
+$ ls -R
 ```
 
 sur la ligne de commande. Testez votre code. Utilisez le principe de la
@@ -70,7 +70,7 @@ fonction récursive.
 Ajoutez la déclaration suivante en repertoire.h
 
 ```
-void lire_dossier_iteratif(char *);              
+void lire_dossier_iteratif(char *);
 ```
 
 Implémentez cette fonction en repertoire.c qui parcourt le répertoire
@@ -88,7 +88,7 @@ Téléchargez les fichiers suivants à partir d'e-campus : *client.h*,
 Exécutez
 
 ```
-$ make             
+$ make
 ```
 
 et voyez les fichiers exécutables qui sont créés.
@@ -96,13 +96,13 @@ et voyez les fichiers exécutables qui sont créés.
 Ouvrez deux terminaux. Sur le premier terminal, exécutez
 
 ```
-./serveur             
+./serveur
 ```
 
 et sur le second terminal
 
 ```
-./client             
+./client
 ```
 
 Entrez un message et voyez les affichages sur les deux terminaux.
@@ -119,7 +119,7 @@ exécutables).
 
 Vous avez remarqué les premiers caractères dans chaque message :
 'message' suivi par :. Pour votre prochaine question, on utilisera
-calcule. 
+calcule.
 
 Modifiez les fichiers client.c et serveur.c pour le support des
 calculs simples (+,-,*,...). Ajoutez une fonction
@@ -129,13 +129,13 @@ envoie l'opérateur et un (ou deux) numéros et le serveur envoie le
 résultat. Par exemple, si le client envoie le message
 
 ```
-calcule : + 23 45             
+calcule : + 23 45
 ```
 
 Le serveur répond
 
 ```
-calcule : 68              
+calcule : 68
 ```
 
 Testez votre code avec les numéros flottants et entiers.
@@ -153,8 +153,8 @@ sujet.
 Vous avez déjà implémenté la fonctionnalité permettant d'effectuer divers calculs comme l'addition,
 la multiplication côté serveur, mais en utilisant 2 nombres à la fois.
 
-Le but de l'exercice final est de calculer la somme de 5 notes et la moyenne pour chaque élève 
-et pour la classe de 5 élèves (les détails sont stockés dans le répertoire). 
+Le but de l'exercice final est de calculer la somme de 5 notes et la moyenne pour chaque élève
+et pour la classe de 5 élèves (les détails sont stockés dans le répertoire).
 
 Sans aucune modification du côté serveur, vous devez assurer une série d'opérations côté client pour obtenir ces résultats
 

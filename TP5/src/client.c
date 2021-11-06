@@ -12,6 +12,8 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <fcntl.h>
+#include <dirent.h>
 
 #include "client.h"
 
@@ -19,6 +21,75 @@
  * Fonction d'envoi et de réception de messages
  * Il faut un argument : l'identifiant de la socket
  */
+
+int lire_fichier(char *fichier)
+{
+  char content[2];
+    int fd, size;
+
+    fd = open(fichier, O_RDONLY);
+
+    if (fd < 0)
+    {
+        printf("Erreur impossible d'acceder au fichier \"%s\"\n", argv[1]);
+        exit(0);
+    }
+    size = read(fd, content, 1);
+    if (size < 1 )
+    {
+      return -1;
+    }
+    return atoi(content);
+
+    close(fd);
+}
+void lire_dossier_recursif(char *nom_dossier)
+{
+  DIR *dirp = opendir(nom_dossier);
+
+  if(dirp == NULL)
+  {
+      perror("opendir");
+      exit(0);
+  }
+
+  struct dirent * element;
+
+  for (int i = 0; i < 5; i++)
+  {
+    element = readdir(dirp);
+    if(element == NULL)
+    {
+        break;
+    }
+  }
+  while(1)
+  {
+      element = readdir(dirp);
+      if(element == NULL)
+      {
+          break;
+      }
+      if ((strcmp(element->d_name, ".") != 0) && (strcmp(element->d_name, "..") != 0))
+      {
+          if (element->d_type == DT_DIR)
+          {
+              printf("%s\n", element->d_name);
+              char nouv_dossier[100];
+              strcpy(nouv_dossier, nom_dossier);
+              strcat(nouv_dossier, "/");
+              strcat(nouv_dossier, element->d_name);
+              lire_dossier_recursif(nouv_dossier, level+1);
+          }
+          else
+          {
+              printf("%s\n", element->d_name);
+          }
+      }
+
+  }
+  closedir(dirp);
+}
 
 int envoie_recois_message(int socketfd) {
 
