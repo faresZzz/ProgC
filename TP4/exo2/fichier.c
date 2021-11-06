@@ -4,41 +4,41 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdlib.h>
+#include "fichier.h"
 
-char lire_fichier(char *nom_fichier)
+void lire_fichier(char *nom_fichier)
 {
-    char content;
+    char content[100];
     int fd, size;
-    fd = open(
-        nom_fichier, O_RDONLY);
 
-    while (1)
+    fd = open(nom_fichier, O_RDONLY);
+
+    if (fd < 0)
     {
-        size = read(fd, &content, 1);
-        if(size < 1)
+        printf("Erreur impossible d'acceder au fichier \"%s\"\n", nom_fichier);
+        close(fd);
+        exit(0);
+    }
+    while(1)
+    {
+        size = read(fd, content, 1);
+        if (size < 1 )
         {
             break;
         }
-        printf("%c", content);
+        printf("%s", content);
     }
+    printf("\n");
     close(fd);
-
 
 }
 
-char ecrire_dans_fichier(char *nom_fichier, char *message)
+void ecrire_dans_fichier(char *nom_fichier, char *message)
 {
-
     int fd, count, size;
-    fd = open (nom_fichier, O_CREAT|O_WRONLY, S_IRUSR|S_IWUSR);
+    fd = open (nom_fichier, O_CREAT|O_WRONLY|O_APPEND, S_IRUSR|S_IWUSR);
     size = write(fd, message, strlen(message));
     close(fd);
 }
 
-int main()
-{
-    char *fichier = "fichier.txt";
-    lire_fichier(fichier);
-    return 0;
-
-}

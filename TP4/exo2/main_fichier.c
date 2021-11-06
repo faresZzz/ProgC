@@ -3,31 +3,25 @@
 
 
 
-int main()
+int main(int argc, char **argv)
 {
     char read_write;
-    char fichier;
-    char *ptr_fichier = &fichier;
     char message[100];
-    char *ptr_message = message;
 
-    printf("donner le nom du fichier:");
-    scanf("%s", &fichier);
+    // printf("\n Donner l'action a executer [r/w]:");
+    // scanf("%c", &read_write);
 
-    printf("\n Donner l'action a executer [r/w]:");
-    scanf("%c", &read_write);
-
-    switch (read_write)
+    switch (*argv[2])
     {
     case 'r':
-        lire_fichier(ptr_fichier);
+        lire_fichier(argv[1]);
         break;
 
     case 'w':
 
         printf("Entrer votre phrase:");
-        scanf("%[^\n]", &message);
-        ecrire_dans_fichier(ptr_fichier, ptr_message);
+        fgets( message, sizeof(message), stdin);
+        ecrire_dans_fichier(argv[1], message);
         break;
     default:
         printf("la commende entree ne correspond pas\n");

@@ -1,5 +1,5 @@
 
 
-char lire_fichier(char *nom_de_fichier);
+void lire_fichier(char *nom_de_fichier);
 
-char ecrire_dans_fichier(char *nom_de_fichier, char *message);
+void ecrire_dans_fichier(char *nom_de_fichier, char *message);
