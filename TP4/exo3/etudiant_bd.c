@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "fichier.h"
 
@@ -11,43 +12,63 @@ typedef struct etudiant{
     int systeme;
 }etudiant;
 
-
-void enregistrement()
+void emptybuff()
 {
-    
+    int c;
+    while((c = getchar()) != '\n' && c !=EOF){ }
+}
+
+void enregistrement(char *nom_fichier, int numEtudiant, char nom[], char prenom[], char rue[], char ville[], int note1, int note2)
+{
+
+    char data[1024];
+    memset(data, 0, sizeof(data));
+    sprintf(data, "Etudiant numero : %d\n\tNom: %s, Prenom: %s, Adresse: %s, %s, Note: ProgC %d, Systeme %d\n", numEtudiant, nom, prenom, rue, ville, note1, note2);
+    ecrire_dans_fichier(nom_fichier, data);
 }
 
 int main(int argc, char **argv)
 {
-    //On déclare les nom, prénom, ville et notes de chaque étudiant
-    char nom[5][10] ={"Pierre", "Paul", "Jack", "Moi", "Hugo"};
-    char prenom[5][30] ={"Quiroule", "Enta", "Adit", "Sissure", "le"};
-    char ville[5][30] ={"Paris", "Lyon", "Marseille", "Lille", "Gaule"};
-    int progC[5] ={10, 11, 12, 13, 14};
-    int systeme[5] ={10, 9, 8, 7, 6};
 
-    etudiant liste_etudiant[5];
-
-    //Pour chaque étudiant , on remplit liste_etudiant avec les bonnes informations
-    for (int i = 0; i < 5; i++)
+     if (argc < 3)
     {
-        strcpy(liste_etudiant[i].nom, nom[i]);
-        strcpy(liste_etudiant[i].prenom, prenom[i]);
-        strcpy(liste_etudiant[i].ville, ville[i]);
-        liste_etudiant[i].progC = progC[i];
-        liste_etudiant[i].systeme = systeme[i];
+        printf("Veuillez saisir les information: ./etudiant_bd 'Nom fichier' nombre d'etudiant'\n");
+        exit(0);
     }
 
-    //On affiche les phrases descriptives des étudiants grâce à struct
-    for (int i = 0; i < 5; i++)
+    int nb_etudiants = atoi(argv[2]);
+    char message[300];
+    char nom[10];
+    char prenom[30];
+    char rue [100];
+    char ville[100];
+    int progC;
+    int systeme;
+    for (int etudiant = 0; etudiant < nb_etudiants; etudiant++)
     {
-        printf("Bonjour je suis %s %s, j\'habite à %s, mes notes en Programmation en C et Système d'exploitation sont: %d, %d\n", liste_etudiant[i].nom, liste_etudiant[i].prenom, liste_etudiant[i].ville, liste_etudiant[i].progC, liste_etudiant[i].systeme);
+        printf("veuillez saisir les informations de l'etudiant:\n");
+        printf("Nom: ");
+        scanf("%s", nom);
+        emptybuff();
+        printf("Prenom: ");
+        scanf("%s", prenom);
+        emptybuff();
+        printf("Rue: ");
+        scanf("%s", rue);
+        emptybuff();
+        printf("Ville: ");
+        scanf("%s", ville);
+        emptybuff();
+        printf("Note ProgC: ");
+        scanf("%d", &progC);
+        emptybuff();
+        printf("Note Système: ");
+        scanf("%d", &systeme);
+        emptybuff();
+
+        enregistrement(argv[1], etudiant+1, nom, prenom, rue, ville, progC, systeme);
     }
 
-
-
-
-    printf("\n");
     return 0;
 
 }

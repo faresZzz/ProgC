@@ -38,6 +38,12 @@ void ecrire_dans_fichier(char *nom_fichier, char *message)
 {
     int fd, count, size;
     fd = open (nom_fichier, O_CREAT|O_WRONLY|O_APPEND, S_IRUSR|S_IWUSR);
+    if (fd < 0)
+    {
+        printf("Erreur impossible d'acceder au fichier \"%s\"\n", nom_fichier);
+        close(fd);
+        exit(0);
+    }
     size = write(fd, message, strlen(message));
     close(fd);
 }

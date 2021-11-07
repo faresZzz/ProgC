@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include "fichier.h"
 
-/* 
+/*
 marche mais pas pour tous les mot: marche pour juste ne marche pas pour B
 
 */
@@ -15,6 +15,11 @@ marche mais pas pour tous les mot: marche pour juste ne marche pas pour B
 
 int main(int argc, char **argv)         // argv: ./chercherficher NomFichier Expression
 {
+     if (argc < 3)
+    {
+        printf("Veuillez saisir les information: ./chercherficher 'NomFichier' 'Expression'\n");
+        exit(0);
+    }
     char data[1024];
     memset(data, 0, sizeof(data));
     char mot[] = "juste";
