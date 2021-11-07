@@ -7,33 +7,69 @@
 #include <stdlib.h>
 #include "fichier.h"
 
-void lire_fichier(char *nom_fichier, char * data, int* offset)
+
+int wc_maison(char *nom_fichier)
+{
+    char content[100];
+    int fd, size, compteur = 0;
+
+    fd = open(nom_fichier, O_RDONLY);
+    if (fd < 0)
+    {
+        printf("Erreur impossible d'acceder au fichier \"%s\"\n", nom_fichier);
+        exit(0);
+    }
+    while(1)
+    {
+        size = read(fd, content, 1);
+        if (size < 1 )
+        {
+            break;
+        }
+        else if (strncmp(content, "\n", 2)==0)
+        {
+            compteur++;
+        }
+
+    }
+
+    close(fd);
+    return compteur;
+
+}
+
+int lire_fichier(char *nom_fichier, char * data, int offset)
 {
     char content[100];
     int fd, size;
 
     fd = open(nom_fichier, O_RDONLY);
-    lseek(fd, *offset, SEEK_SET);
+    lseek(fd, offset, SEEK_SET);
     if (fd < 0)
     {
-        printf("Erreur impossible d'acceder au fichier \"%s\"\n", nom_fichier);
+        printf("Erreur impossible d'acceder au fichier \"%s\\n", nom_fichier);
         close(fd);
         exit(0);
     }
     while(1)
     {
-        size = pread(fd, content, 1, *offset);
+        size = read(fd, content, 1);
+        offset++;
+
         if (size < 1 || strncmp(content, "\n", 2)==0 )
         {
             break;
         }
-        (*offset)++;
+
         strcat(data, content);
-        // printf("%s", content);
+        //printf("carractere: %d '%s'\n", offset, content);
+
+
     }
     // printf("\n");
 
     close(fd);
+    return offset;
 
 }
 

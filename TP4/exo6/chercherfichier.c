@@ -7,7 +7,10 @@
 #include <stdlib.h>
 #include "fichier.h"
 
+/* 
+marche mais pas pour tous les mot: marche pour juste ne marche pas pour B
 
+*/
 
 
 int main(int argc, char **argv)         // argv: ./chercherficher NomFichier Expression
@@ -15,18 +18,14 @@ int main(int argc, char **argv)         // argv: ./chercherficher NomFichier Exp
     char data[1024];
     memset(data, 0, sizeof(data));
     char mot[] = "juste";
-    char path[] = "fichier.txt";
     int offset = 0;
-    int ligne = 1;
     int compteur = 0;
     int valide = 0;
-    // while(1)
-    // {
-        for (int o = 0; o < 4; o++)
-        {
-        lire_fichier(path, data, &offset);          // probleme d'offset lit toujours la meme ligne
+    int nbligne = wc_maison(argv[1]);
+    for (int ligne = 1; ligne <= nbligne; ligne++)
+    {
+        offset = lire_fichier(argv[1], data, offset);          // probleme d'offset lit toujours la meme ligne
 
-        if (data)
         for (int i = 0; i < (strlen(data) -strlen(mot)); i++)
         {
             for (int j = 0; j<strlen(mot); j++)
@@ -39,23 +38,18 @@ int main(int argc, char **argv)         // argv: ./chercherficher NomFichier Exp
                         compteur++;
                     }
                 }
-                else
-                {
-                    break;
-                }
             }
 
-            if (compteur > 0)
+            valide = 0;
+        }
+        if (compteur > 0)
             {
                 printf("Ligne %d, %d fois\n", ligne, compteur);
             }
-            valide = 0;
+
             compteur = 0;
-        }
-
-        ligne++;
-        }
-
-
-    // }
+        memset(data, 0, sizeof(data));
+    }
+    printf("Fin de fichier\n");
+    return 0;
 }

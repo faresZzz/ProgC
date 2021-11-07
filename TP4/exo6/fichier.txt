@@ -1,3 +1,6 @@
-Bonjour je suis juste un fichier de test.
-Je suis la dans le seul but de permettre de tester les programmes en CSalut toi
-\nCouCou
+bonjour a tous
+je 
+suis
+un 
+fichier
+quelconque
