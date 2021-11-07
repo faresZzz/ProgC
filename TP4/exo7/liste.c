@@ -1,26 +1,39 @@
 #include <stdio.h>
+// #include "liste.h"
 
 
-typedef struct liste_couleurs {
-    
-    struct couleur *next;
-}liste_couleurs;
+struct couleur{
+   int R;
+   int G;
+   int B;
+   int A;
+ struct couleur *next;
+}couleur;
 
-void insertion (struct couleur *, struct liste_couleurs *)
+
+struct Liste_couleurs {
+    struct couleur *first;
+};
+
+void insertion (struct couleur *nouveau, struct Liste_couleurs *liste_couleurs)
 {
-
-    while (liste_couleurs.next != NULL)
-    {
-        liste_couleurs = liste_couleurs.next;
-    }
-
-    liste_couleurs->next = couleur
-
+    nouveau->next = liste_couleurs->first->next;
+    liste_couleurs->first->next = nouveau;
 }
-void parcours (struct liste_couleurs *);
+
+void parcours (struct Liste_couleurs *liste_couleurs)
 {
-    while(liste_couleurs->next != NULL) { //navigation
-        printf( "cptr->bleu: %hhx\n", cptr->bleu);
-        cptr = cptr->next; //couleur suivante
+    struct couleur *couleur = liste_couleurs->first;
+    while(1) { //navigation
+        printf( "couleur: (%d, %d, %d, %d)\n", couleur->R, couleur->G, couleur->B, couleur->A);
+
+        if (couleur->next == NULL)
+        {
+            break;
+        }
+        couleur = couleur->next; //couleur suivante
     }
 }
+
+
+
