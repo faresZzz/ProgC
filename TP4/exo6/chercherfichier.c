@@ -22,30 +22,32 @@ int main(int argc, char **argv)         // argv: ./chercherficher NomFichier Exp
     }
     char data[1024];
     memset(data, 0, sizeof(data));
-    char mot[] = "juste";
+    char *mot = argv[2];
     int offset = 0;
     int compteur = 0;
     int valide = 0;
     int nbligne = wc_maison(argv[1]);
     for (int ligne = 1; ligne <= nbligne; ligne++)
     {
-        offset = lire_fichier(argv[1], data, offset);          // probleme d'offset lit toujours la meme ligne
-
-        for (int i = 0; i < (strlen(data) -strlen(mot)); i++)
+        offset = lire_fichier(argv[1], data, offset);
+        if (strlen(data) >= strlen(argv[2]))
         {
-            for (int j = 0; j<strlen(mot); j++)
+            for (int i = 0; i < (strlen(data) -strlen(mot)); i++)
             {
-                if (data[i+j] == mot[j])
+                for (int j = 0; j<strlen(argv[2]); j++)
                 {
-                    valide ++;
-                    if (valide == strlen(mot))
+                    if (data[i+j] == argv[2][j])
                     {
-                        compteur++;
+                        valide ++;
+                        if (valide == (strlen(argv[2])))
+                        {
+                            compteur++;
+                        }
                     }
                 }
-            }
 
-            valide = 0;
+                valide = 0;
+            }
         }
         if (compteur > 0)
             {
