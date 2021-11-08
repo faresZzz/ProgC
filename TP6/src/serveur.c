@@ -21,7 +21,7 @@
 format message:
 {
   'code': couleur,
-  'message:[X, 0xXX, ...]
+  'message:X, 0xXX, ...
 }
 */
 void unformat_data(char* data, char *code, char *message)
