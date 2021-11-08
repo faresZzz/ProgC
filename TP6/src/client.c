@@ -21,6 +21,19 @@
  * Il faut un argument : l'identifiant de la socket
  */
 
+/*
+format message:
+{
+  'code': couleur,
+  'message:[X, 0xXX, ...]
+}
+*/
+void format_data(char* data, char *code, char *message)
+{
+  memset(data, 0, sizeof(data));
+  sprintf(data,"{ \n \t 'code': %s , \n\t 'message': %s\n} ", code, message);
+
+}
 int envoie_recois_message(int socketfd) {
 
   char data[1024];
@@ -33,8 +46,8 @@ int envoie_recois_message(int socketfd) {
   printf("Votre message (max 1000 caracteres): ");
   fgets(message, 1024, stdin);
   strcpy(data, "message: ");
-  strcat(data, message);
-
+  //strcat(data, message);
+  format_data(data, "message", message);
   int write_status = write(socketfd, data, strlen(data));
   if ( write_status < 0 ) {
     perror("erreur ecriture");
@@ -62,27 +75,46 @@ void analyse(char *pathname, char *data, char *num) {
   couleur_compteur *cc = analyse_bmp_image(pathname);
 
   int count;
-  strcpy(data, "couleurs: ");
-  char temp_string[10];
+  // strcpy(data, "couleurs: ");
+  char temp_string[1024];
+  char temp_couleur[10];
+  memset(temp_string, 0, sizeof(temp_string));
   if (cc->size < 10) {
     sprintf(num, "%d,", cc->size);
   }
-  strcat(data, num);
-  strcat(data, ",");
+  // strcat(data, num);
+  // strcat(data, ",");
+  strcat(temp_string, num);
+  strcat(temp_string, ",");
+
+  // //choisir 10 couleurs
+  // for (count = 1; count < (atoi(num)+1) && cc->size - count >0; count++) {
+  //   if(cc->compte_bit ==  BITS32) {
+  //     sprintf(temp_string, "#%02x%02x%02x,", cc->cc.cc24[cc->size-count].c.rouge,cc->cc.cc32[cc->size-count].c.vert,cc->cc.cc32[cc->size-count].c.bleu);
+  //   }
+  //   if(cc->compte_bit ==  BITS24) {
+  //     sprintf(temp_string, "#%02x%02x%02x,", cc->cc.cc32[cc->size-count].c.rouge,cc->cc.cc32[cc->size-count].c.vert,cc->cc.cc32[cc->size-count].c.bleu);
+  //   }
+  //   strcat(data, temp_string);
+  // }
+
+  // //enlever le dernier virgule
+  // data[strlen(data)-1] = '\0';
 
   //choisir 10 couleurs
   for (count = 1; count < (atoi(num)+1) && cc->size - count >0; count++) {
     if(cc->compte_bit ==  BITS32) {
-      sprintf(temp_string, "#%02x%02x%02x,", cc->cc.cc24[cc->size-count].c.rouge,cc->cc.cc32[cc->size-count].c.vert,cc->cc.cc32[cc->size-count].c.bleu);
+      sprintf(temp_couleur, "#%02x%02x%02x,", cc->cc.cc24[cc->size-count].c.rouge,cc->cc.cc32[cc->size-count].c.vert,cc->cc.cc32[cc->size-count].c.bleu);
     }
     if(cc->compte_bit ==  BITS24) {
-      sprintf(temp_string, "#%02x%02x%02x,", cc->cc.cc32[cc->size-count].c.rouge,cc->cc.cc32[cc->size-count].c.vert,cc->cc.cc32[cc->size-count].c.bleu);
+      sprintf(temp_couleur, "#%02x%02x%02x,", cc->cc.cc32[cc->size-count].c.rouge,cc->cc.cc32[cc->size-count].c.vert,cc->cc.cc32[cc->size-count].c.bleu);
     }
-    strcat(data, temp_string);
+    strcat(temp_string, temp_couleur);
   }
 
   //enlever le dernier virgule
-  data[strlen(data)-1] = '\0';
+  temp_string[strlen(temp_string)-1] = '\0';
+  format_data(data, "couleurs", temp_string);
 }
 
 int envoie_couleurs(int socketfd, char *pathname, char *num) {
@@ -127,6 +159,7 @@ int main(int argc, char **argv) {
     perror("connection serveur");
     exit(EXIT_FAILURE);
   }
+  //envoie_recois_message(socketfd);
   if (argc<3)
   {
     char default_val[] = "10";
@@ -137,7 +170,7 @@ int main(int argc, char **argv) {
   {
     envoie_couleurs(socketfd, argv[1], argv[2]);
   }
-  
+
 
   close(socketfd);
 }

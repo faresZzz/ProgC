@@ -16,6 +16,21 @@
 
 #include "serveur.h"
 
+
+/*
+format message:
+{
+  'code': couleur,
+  'message:[X, 0xXX, ...]
+}
+*/
+void unformat_data(char* data, char *code, char *message)
+{
+  memset(message, 0, sizeof(message));
+  memset(code, 0, sizeof(code));
+  sscanf(data,"{ \n \t 'code': %s , \n\t 'message': %s\n} ", code, message);
+
+}
 void plot(char *data) {
 
   //Extraire le compteur et les couleurs RGB
@@ -26,7 +41,7 @@ void plot(char *data) {
   char *saveptr = NULL;
   char *str = data;
   int nb_couleur;
-  sscanf(data, "couleurs: %d,", &nb_couleur);
+  sscanf(data, " %d,", &nb_couleur);
   fprintf(p, "set xrange [-15:15]\n");
   fprintf(p, "set yrange [-15:15]\n");
   fprintf(p, "set style fill transparent solid 0.9 noborder\n");
@@ -97,15 +112,32 @@ int recois_envoie_message(int socketfd) {
    */
   printf ("Message recu: %s\n", data);
   char code[10];
-  sscanf(data, "%s", code);
+  char message[100];
+  // sscanf(data, "%s", code);
+  unformat_data(data, code, message);
+  printf("\n code: %s \n message: %s\n", code, message);
+
+  // //Si le message commence par le mot: 'message:'
+  // if (strcmp(code, "message:") == 0) {
+  //   renvoie_message(client_socket_fd, data);
+  // }
+  // else {
+  //   plot(data);
+  // }
+
+
 
   //Si le message commence par le mot: 'message:'
-  if (strcmp(code, "message:") == 0) {
-    renvoie_message(client_socket_fd, data);
+  if (strcmp(code, "message") == 0)
+  {
+    renvoie_message(client_socket_fd, message);
   }
-  else {
-    plot(data);
+
+  else
+  {
+    plot(message);
   }
+
 
   //fermer le socket
   close(socketfd);
