@@ -1,4 +1,3 @@
-
 /*
  * SPDX-FileCopyrightText: 2021 John Samuel
  *
@@ -17,27 +16,21 @@
 
 #include "serveur.h"
 
-
-void unformat_message(char * data, char *code, char *message)
-{
-  sscanf(data, "{ \"code\" : \" %s \", \"valeurs\" : [\" %s \"] } ", code, message);
-}
-
 void plot(char *data) {
 
   //Extraire le compteur et les couleurs RGB
   FILE *p = popen("gnuplot -persist", "w");
-  printf("Plot");
+  printf("Plot\n");
   int count = 0;
   int n;
   char *saveptr = NULL;
   char *str = data;
-  char longeur[10];
-  sscanf(data, "%s,", longeur);
+  int nb_couleur;
+  sscanf(data, "couleurs: %d,", &nb_couleur);
   fprintf(p, "set xrange [-15:15]\n");
   fprintf(p, "set yrange [-15:15]\n");
   fprintf(p, "set style fill transparent solid 0.9 noborder\n");
-  fprintf(p, "set title 'Top %s colors'\n", longeur);
+  fprintf(p, "set title 'Top %d colors'\n", nb_couleur);
   fprintf(p, "plot '-' with circles lc rgbcolor variable\n");
   while(1) {
     char *token = strtok_r(str, ",", &saveptr);
@@ -50,8 +43,7 @@ void plot(char *data) {
     }
     else {
       // Le numéro 36, parceque 360° (cercle) / 10 couleurs = 36
-      int n = atoi(longeur);
-      fprintf(p, "0 0 10 %d %d 0x%s\n", (count-1)*(360/n), count*(360/n), token+1);
+      fprintf(p, "0 0 10 %d %d 0x%s\n", (count-1)*(360/nb_couleur), count*36, token+1);
     }
     count++;
   }
@@ -62,8 +54,8 @@ void plot(char *data) {
 
 /* renvoyer un message (*data) au client (client_socket_fd)
  */
-int renvoie_message(int client_socket_fd, char *message) {
-  int data_size = write (client_socket_fd, (void *) message, strlen(message));
+int renvoie_message(int client_socket_fd, char *data) {
+  int data_size = write (client_socket_fd, (void *) data, strlen(data));
 
   if (data_size < 0) {
     perror("erreur ecriture");
@@ -105,14 +97,11 @@ int recois_envoie_message(int socketfd) {
    */
   printf ("Message recu: %s\n", data);
   char code[10];
-  char message[100];
-  unformat_message(data, code, message);
-  printf("Code: %s\nMessage: %s \n", code, message);
-  // sscanf(data, "%s", code);
+  sscanf(data, "%s", code);
 
   //Si le message commence par le mot: 'message:'
-  if (strcmp(code, "message") == 0) {
-    renvoie_message(client_socket_fd, message);
+  if (strcmp(code, "message:") == 0) {
+    renvoie_message(client_socket_fd, data);
   }
   else {
     plot(data);

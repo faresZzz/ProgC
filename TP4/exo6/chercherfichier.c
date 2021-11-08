@@ -8,7 +8,7 @@
 #include "fichier.h"
 
 /*
-marche mais pas pour tous les mot: marche pour juste ne marche pas pour B
+
 
 */
 
