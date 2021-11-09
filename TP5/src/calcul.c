@@ -2,6 +2,8 @@
 Auteurs : Farès ZAGHOUANE, Maxime CURRAL
 Rendu le 09/11/2021 dans le cadre du module "Programmation en C"
 CPE LYON
+
+Programme calcul du TP4 modifier en bibliotheque
 */
 
 #include <stdio.h>

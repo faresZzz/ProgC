@@ -2,6 +2,8 @@
 Auteurs : Farès ZAGHOUANE, Maxime CURRAL
 Rendu le 09/11/2021 dans le cadre du module "Programmation en C"
 CPE LYON
+
+Programme serveur du TP5 exercice 5 simplement modifer pour ecouter en boucle sur la socket
 */
 
 /*
@@ -36,6 +38,7 @@ int renvoie_message(int client_socket_fd, char *data) {
 
 
 int recois_numero_calcule(int client_socket_fd, char *data)
+// realisation de l'operation demander par le client
 {
   char op;
   int num1, num2, result;
@@ -72,7 +75,7 @@ int recois_envoie_message(int socketfd) {
     return(EXIT_FAILURE);
   }
 
-  while(1) // lecture en continue sur le socket jusqu'a recevoir un message de FIN
+  while(1) // lecture en continue sur la socket jusqu'a recevoir un message de FIN
   {
     // la réinitialisation de l'ensemble des données
     memset(data, 0, sizeof(data));
@@ -99,17 +102,6 @@ int recois_envoie_message(int socketfd) {
     if (strcmp(code, "message:") == 0) {
       //Permet a l'utilisateur cote serveur de saisir un message qui vas etre renvoyer au client
 
-      // if(strcmp(fin, "FIN!!") == 0 )
-      // {
-      //   memset(data, 0, sizeof(data));
-      //   strcpy(data, "message: ");
-      //   strcpy(fin, "FIN!!");
-      //   strcat(data, fin);
-      //   renvoie_message(client_socket_fd, data);
-      //   break;
-      // }
-      // else
-      // {
       memset(data, 0, sizeof(data));
       char message[100];
       printf("Votre message (max 100 caracteres): ");
@@ -117,7 +109,7 @@ int recois_envoie_message(int socketfd) {
       strcpy(data, "message: ");
       strcat(data, message);
       renvoie_message(client_socket_fd, data);
-      // }
+
 
 
     }
@@ -126,6 +118,7 @@ int recois_envoie_message(int socketfd) {
       recois_numero_calcule(client_socket_fd, data);
     }
     else if (strcmp(code, "FIN!!") == 0)
+    // reception du signal de Fin renvoi de la reponse au client pour signifier que l'on a bien recu
     {
       char message[100];
       memset(data, 0, sizeof(data));

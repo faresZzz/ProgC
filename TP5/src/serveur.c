@@ -36,12 +36,17 @@ int renvoie_message(int client_socket_fd, char *data) {
 
 
 int recois_numero_calcule(int client_socket_fd, char *data)
+/*
+Reception d'un calcul a realiser appel des fonctions de la biliotheque calcul
+Puis renvoi de la reponse
+*/
 {
   char op;
   int num1, num2, result;
 
   sscanf(data, "calcul: %c %d %d", &op, &num1, &num2 );
   printf("%c %d %d \n", op, num1, num2);
+
   result = calcul(op, num1, num2);
   char value[100];
   sprintf(value, "%d", result );

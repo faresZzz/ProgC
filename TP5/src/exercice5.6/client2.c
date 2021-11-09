@@ -2,6 +2,9 @@
 Auteurs : Farès ZAGHOUANE, Maxime CURRAL
 Rendu le 09/11/2021 dans le cadre du module "Programmation en C"
 CPE LYON
+
+Programme permetant de venir lire les notes de chaque etudiant contenu dans le dossier etudiants
+Et d'en faire la moyenne
 */
 
 /*
@@ -29,6 +32,7 @@ CPE LYON
  * Il faut un argument : l'identifiant de la socket
  */
 
+// creation de la structure etudiant
 typedef struct Eleve{
   char path[100];             // chemin vers son dossier ./etudiant/X
   int notes[5];
@@ -43,12 +47,6 @@ int envoie_recois_message(int socketfd, char message[100]) {
   // la réinitialisation de l'ensemble des données
   memset(data, 0, sizeof(data));
 
-
-  // Demandez à l'utilisateur d'entrer un message
-  // char message[100];
-  // printf("Votre message (max 100 caracteres): ");
-  // fgets(message, 100, stdin);
-  //strcpy(data, "message:");
   strcat(data, message);
 
   int write_status = write(socketfd, data, strlen(data));
@@ -75,6 +73,9 @@ int envoie_recois_message(int socketfd, char message[100]) {
 
 
 int envoie_operateur_numeros(int socketfd, char op, int num1, int num2)
+/*
+Fonction qui vas venir envoyer le calcul a efecturer au serveur2
+*/
 {
   char data[1024];
   // la réinitialisation de l'ensemble des données
@@ -114,13 +115,17 @@ int envoie_operateur_numeros(int socketfd, char op, int num1, int num2)
 void notes_Eleves(int socketfd)
 {
   Eleve liste_eleve[5];
+  // liste des moyennes de la classe par matiere
   int liste_moyennes_matieres[] = {0, 0, 0, 0, 0};
 
-  for (int i = 0; i < 5 ; i++) // on vient recupere tous les notes de chaque etudiant
+  for (int i = 0; i < 5 ; i++)
+  // on vient recupere tous les notes de chaque etudiant
   {
+    // on assigne un Path a chaque eleve
     sprintf(liste_eleve[i].path,"./etudiant/%d", i+1);
     for (int j = 0; j < 5; j++)
     {
+      // boucle pour donner a chque chaque eleve ces notes
       char fichier[120];
       sprintf(fichier, "%s/note%d.txt", liste_eleve[i].path, j+1);
       liste_eleve[i].notes[j] = lire_fichier(fichier);
@@ -130,26 +135,33 @@ void notes_Eleves(int socketfd)
   }
 
   for(int eleve = 0; eleve < 5; eleve++) // on boucle sur chque eleve pour calculer sa moyenne. on fait en meme temps la moyenne par matiere
+  // boucle sur les eleve
   {
       for (int note = 0; note < 5; note++)
+      // boucle sur les notes de chaque etudiant
       {
+        // calcul de la somme de l'eleve
         liste_eleve[eleve].moyenne = envoie_operateur_numeros(socketfd, '+',liste_eleve[eleve].moyenne, liste_eleve[eleve].notes[note] ); // moyenne de l'eleve
 
+        // calcul de la somme des notes par matiere
         liste_moyennes_matieres[note] = envoie_operateur_numeros(socketfd, '+',liste_moyennes_matieres[note], liste_eleve[eleve].notes[note] ); // moyenne dans la matiere
       }
+      // obtention de la moyenne de l'eleve
       liste_eleve[eleve].moyenne = envoie_operateur_numeros(socketfd, '/',liste_eleve[eleve].moyenne, 5 );
   }
 
   for (int matiere = 0; matiere < 5; matiere++)
   {
+    // obtention de la moyenne par matiere
     liste_moyennes_matieres[matiere] = envoie_operateur_numeros(socketfd, '/',liste_moyennes_matieres[matiere], 5 );
   }
 
 
-
-
+  // envoi d'un signal de fin au serveur
+  envoie_recois_message(socketfd, "FIN!!");
 
   for (int k = 0; k < 5; k++)
+  // affichage
     {
       printf("eleve n°%d: path: %s, notes(%d, %d, %d, %d, %d) moyenne: %d\n",
                                                                             k,
@@ -164,7 +176,7 @@ void notes_Eleves(int socketfd)
       printf("Moyenne dans la matiere %d: %d\n\n", k, liste_moyennes_matieres[k]);
     }
 
-  envoie_recois_message(socketfd, "FIN!!");
+
 
 }
 
@@ -197,31 +209,6 @@ int main() {
   }
 
   notes_Eleves(socketfd);
-  // char commande;
-
-  // printf("Voulez vous envoyer un message ou un calcul:[m/c] ");
-  // scanf("%c", &commande);
-
-  // //  clear buffer scanf
-  // int c;
-  // while((c = getchar()) != '\n' && c !=EOF){ }
-
-  // switch(commande)
-  // {
-  //   case 'm':
-  //     // appeler la fonction pour envoyer un message au serveur
-  //     envoie_recois_message(socketfd);
-  //     break;
-
-  //   case 'c':
-  //     // appeler la fonction pour envoyer un calcul
-  //     envoie_operateur_numeros(socketfd, '+', 3, 4);
-  //     break;
-
-  //   default:
-  //     printf("Erreur veuiller saisir [m/c] afin d'executer une operation\n");
-  // }
-
 
   close(socketfd);
 }

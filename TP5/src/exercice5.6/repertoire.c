@@ -2,6 +2,8 @@
 Auteurs : Farès ZAGHOUANE, Maxime CURRAL
 Rendu le 09/11/2021 dans le cadre du module "Programmation en C"
 CPE LYON
+
+Programme du TP5 exercices 1-3 adapté en bibliotheque
 */
 
 #include <sys/types.h>
@@ -15,6 +17,7 @@ CPE LYON
 
 
 int lire_fichier(char *fichier)
+// fonction qui vient lire le contenu d'un fichier (TP4 exercice 3)
 {
     char content[2];
     int fd, size, result;
