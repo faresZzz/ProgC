@@ -1,4 +1,10 @@
 /*
+Auteurs : Farès ZAGHOUANE, Maxime CURRAL
+Rendu le 09/11/2021 dans le cadre du module "Programmation en C"
+CPE LYON
+*/
+
+/*
  * SPDX-FileCopyrightText: 2021 John Samuel
  *
  * SPDX-License-Identifier: GPL-3.0-or-later
