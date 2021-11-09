@@ -2,6 +2,8 @@
 Auteurs : Farès ZAGHOUANE, Maxime CURRAL
 Rendu le 09/11/2021 dans le cadre du module "Programmation en C"
 CPE LYON
+
+Meme programme que l'exercice 2
 */
 
 #include <stdio.h>

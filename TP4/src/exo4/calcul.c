@@ -2,6 +2,12 @@
 Auteurs : Farès ZAGHOUANE, Maxime CURRAL
 Rendu le 09/11/2021 dans le cadre du module "Programmation en C"
 CPE LYON
+
+Ce programme a pour but de realiser l'operation choisi par le='utilisateur
+
+./calcul op num1 num2
+op: operation choisit +, -, *, /, %,..
+num1, num2: entiers
 */
 
 #include <stdio.h>
@@ -21,8 +27,6 @@ int main(int argc, char ** argv)
     if (argc > 1)
     {
         strcpy(ptr_op, argv[1]);
-
-
 
         switch(op)
         {

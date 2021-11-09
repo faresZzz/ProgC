@@ -2,6 +2,8 @@
 Auteurs : Farès ZAGHOUANE, Maxime CURRAL
 Rendu le 09/11/2021 dans le cadre du module "Programmation en C"
 CPE LYON
+
+Programme de l'exercice 2 adapté a notre cas
 */
 
 #include <stdio.h>
@@ -15,6 +17,9 @@ CPE LYON
 
 
 int wc_maison(char *nom_fichier)
+/*
+fonction qui compte le nombre de ligne dans le fichier en comptant le nombre de \n presents
+*/
 {
     char content[100];
     int fd, size, compteur = 0;
@@ -45,11 +50,15 @@ int wc_maison(char *nom_fichier)
 }
 
 int lire_fichier(char *nom_fichier, char * data, int offset)
+/*
+fonction qui lit dans le fichier jusqu'au premier \n qui signifi que l'on a fini notre ligne
+*/
 {
     char content[100];
     int fd, size;
 
     fd = open(nom_fichier, O_RDONLY);
+    // deplacement du pointeur dans le fichier pour eviter de lire tout le temps la meme ligne
     lseek(fd, offset, SEEK_SET);
     if (fd < 0)
     {
@@ -68,13 +77,14 @@ int lire_fichier(char *nom_fichier, char * data, int offset)
         }
 
         strcat(data, content);
-        //printf("carractere: %d '%s'\n", offset, content);
+
 
 
     }
-    // printf("\n");
+
 
     close(fd);
+    // renvoi la valeur du nb de carateres lu
     return offset;
 
 }

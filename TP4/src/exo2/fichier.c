@@ -13,7 +13,12 @@ CPE LYON
 #include <stdlib.h>
 #include "fichier.h"
 
+
+
 void lire_fichier(char *nom_fichier)
+/*
+fonction de lecture de fichier
+*/
 {
     char content[100];
     int fd, size;
@@ -21,6 +26,7 @@ void lire_fichier(char *nom_fichier)
     fd = open(nom_fichier, O_RDONLY);
 
     if (fd < 0)
+    // on verifie que le fichier a bien ete ouvert
     {
         printf("Erreur impossible d'acceder au fichier \"%s\"\n", nom_fichier);
         close(fd);
@@ -28,6 +34,7 @@ void lire_fichier(char *nom_fichier)
     }
     while(1)
     {
+        // on lit caractere par caractere dans le fichier avant de les afficher
         size = read(fd, content, 1);
         if (size < 1 )
         {
@@ -41,6 +48,9 @@ void lire_fichier(char *nom_fichier)
 }
 
 void ecrire_dans_fichier(char *nom_fichier, char *message)
+/*
+fonction d'ecriture
+*/
 {
     int fd, count, size;
     fd = open (nom_fichier, O_CREAT|O_WRONLY|O_APPEND, S_IRUSR|S_IWUSR);

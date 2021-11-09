@@ -1,6 +1,2 @@
-
-Nom: Jean, Prenom: Pierre, Adresse: RUe, Lyon, Note: ProgC 10, Systeme 10
- Etudiant numero : 0
-	Nom: Jean, Prenom: Pierre, Adresse: Ok, Lyon, Note: ProgC 12, Systeme 5
 Etudiant numero : 1
 	Nom: Pierre, Prenom: Dupont, Adresse: Avenue, Rilleux, Note: ProgC -3, Systeme 0

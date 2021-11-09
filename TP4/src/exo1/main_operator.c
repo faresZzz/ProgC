@@ -2,6 +2,8 @@
 Auteurs : Farès ZAGHOUANE, Maxime CURRAL
 Rendu le 09/11/2021 dans le cadre du module "Programmation en C"
 CPE LYON
+
+Ce programme renvoi simplement l'operation choisi entre num 1 et num 2
 */
 
 #include <stdio.h>
