@@ -25,10 +25,11 @@ format message:
 }
 */
 void unformat_data(char* data, char *code, char *message)
+// fonction qui vient extraire les informations utiles du message recu
 {
   memset(message, 0, sizeof(message));
   memset(code, 0, sizeof(code));
-  sscanf(data,"{ \n \t 'code': %s , \n\t 'message': %s\n} ", code, message);
+  sscanf(data,"{ \n \t 'code': %s , \n\t 'message': %[^\n]} ", code, message);
 
 }
 void plot(char *data) {
@@ -40,6 +41,7 @@ void plot(char *data) {
   int n;
   char *saveptr = NULL;
   char *str = data;
+  // on extrait le nombre de couleurs
   int nb_couleur;
   sscanf(data, " %d,", &nb_couleur);
   fprintf(p, "set xrange [-15:15]\n");
@@ -57,7 +59,7 @@ void plot(char *data) {
       n = atoi(token);
     }
     else {
-      // Le numéro 36, parceque 360° (cercle) / 10 couleurs = 36
+      // On divise 360 par le nombre de couleurs a plot
       fprintf(p, "0 0 10 %d %d 0x%s\n", (count-1)*(360/nb_couleur), count*36, token+1);
     }
     count++;
@@ -116,15 +118,6 @@ int recois_envoie_message(int socketfd) {
   // sscanf(data, "%s", code);
   unformat_data(data, code, message);
   printf("\n code: %s \n message: %s\n", code, message);
-
-  // //Si le message commence par le mot: 'message:'
-  // if (strcmp(code, "message:") == 0) {
-  //   renvoie_message(client_socket_fd, data);
-  // }
-  // else {
-  //   plot(data);
-  // }
-
 
 
   //Si le message commence par le mot: 'message:'

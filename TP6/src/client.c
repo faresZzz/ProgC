@@ -23,15 +23,24 @@
 
 /*
 format message:
+envoi des couleurs
 {
   'code': couleur,
   'message:X, 0xXX, ...
 }
+
+envoi d'une phrases
+{
+  'code' : message,
+  'message' XXXXXX
+}
+
 */
 void format_data(char* data, char *code, char *message)
+// fonction de formatage du message avant de l'envoyer
 {
   memset(data, 0, sizeof(data));
-  sprintf(data,"{ \n \t 'code': %s , \n\t 'message': %s\n} ", code, message);
+  sprintf(data, "{ \n \t 'code': %s , \n\t 'message': %s \n} ", code, message);
 
 }
 int envoie_recois_message(int socketfd) {
@@ -45,8 +54,8 @@ int envoie_recois_message(int socketfd) {
   char message[100];
   printf("Votre message (max 1000 caracteres): ");
   fgets(message, 1024, stdin);
-  strcpy(data, "message: ");
-  //strcat(data, message);
+
+  // formatage du message
   format_data(data, "message", message);
   int write_status = write(socketfd, data, strlen(data));
   if ( write_status < 0 ) {
@@ -75,31 +84,19 @@ void analyse(char *pathname, char *data, char *num) {
   couleur_compteur *cc = analyse_bmp_image(pathname);
 
   int count;
-  // strcpy(data, "couleurs: ");
+  //  chaine des couleurs temporaire avant de formater le message finale dans data
   char temp_string[1024];
   char temp_couleur[10];
   memset(temp_string, 0, sizeof(temp_string));
+
   if (cc->size < 10) {
     sprintf(num, "%d,", cc->size);
   }
-  // strcat(data, num);
-  // strcat(data, ",");
+
+  // ajout du nombre de couleurs traitées dans le messages
   strcat(temp_string, num);
   strcat(temp_string, ",");
 
-  // //choisir 10 couleurs
-  // for (count = 1; count < (atoi(num)+1) && cc->size - count >0; count++) {
-  //   if(cc->compte_bit ==  BITS32) {
-  //     sprintf(temp_string, "#%02x%02x%02x,", cc->cc.cc24[cc->size-count].c.rouge,cc->cc.cc32[cc->size-count].c.vert,cc->cc.cc32[cc->size-count].c.bleu);
-  //   }
-  //   if(cc->compte_bit ==  BITS24) {
-  //     sprintf(temp_string, "#%02x%02x%02x,", cc->cc.cc32[cc->size-count].c.rouge,cc->cc.cc32[cc->size-count].c.vert,cc->cc.cc32[cc->size-count].c.bleu);
-  //   }
-  //   strcat(data, temp_string);
-  // }
-
-  // //enlever le dernier virgule
-  // data[strlen(data)-1] = '\0';
 
   //choisir 10 couleurs
   for (count = 1; count < (atoi(num)+1) && cc->size - count >0; count++) {
@@ -112,8 +109,10 @@ void analyse(char *pathname, char *data, char *num) {
     strcat(temp_string, temp_couleur);
   }
 
-  //enlever le dernier virgule
+  //enlever la derniere virgule
   temp_string[strlen(temp_string)-1] = '\0';
+
+  // formattage de la data dans le format type Json
   format_data(data, "couleurs", temp_string);
 }
 
@@ -159,17 +158,27 @@ int main(int argc, char **argv) {
     perror("connection serveur");
     exit(EXIT_FAILURE);
   }
-  //envoie_recois_message(socketfd);
-  if (argc<3)
+
+  // switch case permetant de savoir si l'on enoi un message ou des couleurs a plot
+  char default_val[] = "10";
+  switch(argc)
   {
-    char default_val[] = "10";
-    //envoie_recois_message(socketfd);
-    envoie_couleurs(socketfd, argv[1], default_val);
+    // case envoi d'un message
+    case 1: envoie_recois_message(socketfd);
+    break;
+
+    // case envoi des couleurs avec le nombre de tranches par defaut
+    case 2: envoie_couleurs(socketfd, argv[1], default_val);
+    break;
+
+    // case envoi des couleurs avec le nombre de tranches saisi par l'utilisateur
+    case 3: envoie_couleurs(socketfd, argv[1], argv[2]);
+    break;
+
+    default: printf("Erreur arguments passées au programme\n");
   }
-  else
-  {
-    envoie_couleurs(socketfd, argv[1], argv[2]);
-  }
+
+
 
 
   close(socketfd);
