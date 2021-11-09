@@ -63,6 +63,7 @@ int envoie_recois_message(int socketfd) {
 
   // formatage du message
   format_data(data, "message", message);
+
   int write_status = write(socketfd, data, strlen(data));
   if ( write_status < 0 ) {
     perror("erreur ecriture");
