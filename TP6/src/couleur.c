@@ -11,7 +11,7 @@
 #include <stdlib.h>
 #include <search.h>
 
-//compter les couleurs distincts 
+//compter les couleurs distincts
 couleur_compteur* compte_couleur(couleur *c, int csize) {
    couleur_compteur *compteur;
    COMPTEBIT bc;
@@ -23,13 +23,13 @@ couleur_compteur* compte_couleur(couleur *c, int csize) {
      compteur = calloc(1, sizeof(couleur_compteur));
      if (compteur == NULL) {
        perror("Erreur: allocation dynamique de memoire\n");
-       return NULL;      
+       return NULL;
      }
      compteur->compte_bit = BITS24;
      compteur->cc.cc24 = calloc(csize, sizeof(couleur_compteur));
      if (compteur == NULL) {
        perror("Erreur: allocation dynamique de memoire\n");
-       return NULL;      
+       return NULL;
      }
    }
    else if (c->compte_bit == BITS32) {
@@ -37,13 +37,13 @@ couleur_compteur* compte_couleur(couleur *c, int csize) {
      compteur = calloc(1, sizeof(couleur_compteur));
      if (compteur == NULL) {
        perror("Erreur: allocation dynamique de memoire\n");
-       return NULL;      
+       return NULL;
      }
      compteur->compte_bit = BITS32;
      compteur->cc.cc32 = calloc(csize, sizeof(couleur_compteur));
      if (compteur == NULL) {
        perror("Erreur: allocation dynamique de memoire\n");
-       return NULL;      
+       return NULL;
      }
    }
    else {
@@ -61,10 +61,10 @@ couleur_compteur* compte_couleur(couleur *c, int csize) {
      char key[256];
 
      if (bc == BITS24) {
-       sprintf(key, "%hd:%hd:%hd", c->c.c24[i].rouge, c->c.c24[i].vert, c->c.c24[i].bleu); 
+       sprintf(key, "%hd:%hd:%hd", c->c.c24[i].rouge, c->c.c24[i].vert, c->c.c24[i].bleu);
      }
      else if (bc == BITS32) {
-       sprintf(key, "%hd:%hd:%hd:%hd", c->c.c32[i].rouge, c->c.c32[i].vert, c->c.c32[i].bleu, c->c.c32[i].alpha); 
+       sprintf(key, "%hd:%hd:%hd:%hd", c->c.c32[i].rouge, c->c.c32[i].vert, c->c.c32[i].bleu, c->c.c32[i].alpha);
      }
      e.key = key;
 
@@ -80,7 +80,7 @@ couleur_compteur* compte_couleur(couleur *c, int csize) {
          compteur->cc.cc32[compteur_size-1].c = c->c.c32[i];
          compteur->cc.cc32[compteur_size-1].compte = 1;
          e.data = (void *) &compteur->cc.cc32[compteur_size-1];
-       } 
+       }
        es = hsearch(e, ENTER);
        if (es == NULL) {
          perror("Erreur: impossible d'inserer\n");
@@ -95,7 +95,7 @@ couleur_compteur* compte_couleur(couleur *c, int csize) {
        else if (bc == BITS32) {
          couleur32_compteur *cc32 = (couleur32_compteur *) es->data;
          cc32->compte++;
-       } 
+       }
      }
    }
 
@@ -111,10 +111,10 @@ void print_couleur(couleur *c, int csize) {
 
    for (i=0; i < csize; i++) {
      if (c->compte_bit == BITS24) { // 3 octets (RGB)
-       printf("%5x %5x %5x\n", c->c.c24[i].rouge, c->c.c24[i].vert, c->c.c24[i].bleu); 
+       printf("%5x %5x %5x\n", c->c.c24[i].rouge, c->c.c24[i].vert, c->c.c24[i].bleu);
      }
      else if (c->compte_bit == BITS32) { // 4 octets (RGBA)
-       printf("%5x %5x %5x %5x\n", c->c.c32[i].rouge, c->c.c32[i].vert, c->c.c32[i].bleu, c->c.c32[i].alpha); 
+       printf("%5x %5x %5x %5x\n", c->c.c32[i].rouge, c->c.c32[i].vert, c->c.c32[i].bleu, c->c.c32[i].alpha);
      }
      else {
        return;
@@ -128,10 +128,10 @@ void print_couleur_compteur(couleur_compteur * ccompteur) {
 
    for (i=0; i < ccompteur->size; i++) {
      if (ccompteur->compte_bit == BITS24) {
-       printf("%5hx %5hx %5hx: %10d\n", ccompteur->cc.cc24[i].c.rouge, ccompteur->cc.cc24[i].c.vert, ccompteur->cc.cc24[i].c.bleu, ccompteur->cc.cc24[i].compte); 
+       printf("%5hx %5hx %5hx: %10d\n", ccompteur->cc.cc24[i].c.rouge, ccompteur->cc.cc24[i].c.vert, ccompteur->cc.cc24[i].c.bleu, ccompteur->cc.cc24[i].compte);
      }
      else if (ccompteur->compte_bit == BITS32) {
-       printf("%5hx %5hx %5hx %5hx: %10d\n", ccompteur->cc.cc32[i].c.rouge, ccompteur->cc.cc32[i].c.vert, ccompteur->cc.cc32[i].c.bleu, ccompteur->cc.cc32[i].c.alpha, ccompteur->cc.cc32[i].compte); 
+       printf("%5hx %5hx %5hx %5hx: %10d\n", ccompteur->cc.cc32[i].c.rouge, ccompteur->cc.cc32[i].c.vert, ccompteur->cc.cc32[i].c.bleu, ccompteur->cc.cc32[i].c.alpha, ccompteur->cc.cc32[i].compte);
      }
    }
 
