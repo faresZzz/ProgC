@@ -1,4 +1,8 @@
-
+/*
+Auteurs : Farès ZAGHOUANE, Maxime CURRAL
+Rendu le 09/11/2021 dans le cadre du module "Programmation en C"
+CPE LYON
+*/
 
 int somme(int num1, int num2);
 
