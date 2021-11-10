@@ -31,7 +31,7 @@ int main(int argc, char **argv)         // argv: ./chercherficher NomFichier Exp
     if (argc < 3)
     // on verifier d'avoir tous les information nessessaire pour faire la recherche
     {
-        printf("Veuillez saisir les information: ./chercherficher 'NomFichier' 'Expression'\n");
+        printf("Veuillez saisir les informations: ./chercherficher 'NomFichier' 'Expression'\n");
         exit(0);
     }
 

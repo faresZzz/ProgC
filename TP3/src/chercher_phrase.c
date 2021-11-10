@@ -69,7 +69,7 @@ int main()
 
     /* demande a l'utilisateur */
     printf("Entrer la phrase à chercher: ");
-    scanf("%[^\n]", &cherche);
+    scanf("%[^\n]", cherche);
 
     /* boucle sur tab_phrase pour voir si une phrase correspond a celle recherchee */
     for (int i = 0; i < 10; i++)

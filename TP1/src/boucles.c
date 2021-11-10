@@ -17,14 +17,14 @@ int main()
 
     //Autres lignes
     for(int i = 2; i < compteur-1; i++)
-    {   
+    {
         printf("*");
         for(int j = 0; j < i; j++)
         {
             printf("#");
         }
         printf("*\n");
-        
+
     }
 
     //Dernière ligne
@@ -33,5 +33,5 @@ int main()
         printf("*");
     }
     printf("\n");
-    
+
 }

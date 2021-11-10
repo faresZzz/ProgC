@@ -29,17 +29,17 @@ int main()
         {0x37, 0xAF, 0x10, 0x66},
         {0x0E, 0xF3, 0xBF, 0x8A},
         {0x4C, 0x5A, 0x57, 0x6D},
-        
-        
+
+
     };
-  
-    
+
+
     couleur liste_couleur[10];
-    
+
     //On remplit liste_couleur avec les éléments RGBA du tableau
     for (int i = 0; i < 10; i++)
     {
-        
+
        liste_couleur[i].R = tab_couleur[i][0];
        liste_couleur[i].G = tab_couleur[i][1];
        liste_couleur[i].B = tab_couleur[i][2];
@@ -51,11 +51,11 @@ int main()
     {
         printf("couleur (R,G,B,A), (0x%x, 0x%x, 0x%x, 0x%x)\n", liste_couleur[i].R, liste_couleur[i].G, liste_couleur[i].B, liste_couleur[i].A);
     }
-    
-    
-    
-    
+
+
+
+
     printf("\n");
     return 0;
-    
+
 }

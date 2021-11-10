@@ -10,14 +10,14 @@ CPE LYON
 int main()
 {
     //On choisit le nombre à "analyser"
-    int chiffre = 1572847; //2097151 
+    int chiffre = 1572847; //2097151
     int vingt;
     int quatre;
-    
+
     //Opérateurs de décalage de 20 bits et de 4 bits
     vingt = chiffre >>20;
     quatre = chiffre >>4;
-    
+
     //On teste si les 4° et 20° bits de *chiffre* sont bien à 1 et on affiche le résultat
     if (vingt%2 == 1 && quatre % 2 == 1)
     {
@@ -25,8 +25,8 @@ int main()
     }
     else
     {
-        printf("les bits ne correspondent pas");    
+        printf("les bits ne correspondent pas");
     }
     return 0;
-    
+
 }

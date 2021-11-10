@@ -9,11 +9,11 @@ CPE LYON
 int main()
 {
     int valeur = 208;
-    int binaireval[8*sizeof(int)]; 
+    int binaireval[8*sizeof(int)];
     int i;
     printf("la valeur binaire de %d est: ", valeur);
     for( i = 0; i < 8*sizeof(int); i++)
-    {   
+    {
        if (valeur > 0)
        {
             binaireval[i] = valeur%2;
@@ -23,8 +23,8 @@ int main()
        {
            break;
        }
-       
-       
+
+
     }
     for (i-1 ; i >= 0; i-- )
    {
@@ -32,8 +32,8 @@ int main()
    }
     printf("\n");
     return 0;
-    
-        
-    
-    
+
+
+
+
 }

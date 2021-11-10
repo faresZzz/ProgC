@@ -49,7 +49,7 @@ int main(){
 
     printf("long long int adresse : %p\n", ptr_longlongint);
     printf("long long int : %lli\n\n", *ptr_longlongint);
-    
+
     printf("float adresse : %p\n", ptr_float);
     printf("float : %f\n\n", *ptr_float);
 

@@ -1,0 +1,494 @@
+Interpréteur
+- Convertit le programme en prenant une seule ligne à la fois.
+- L’analyse du code source prend moins de temps, mais le temps d’exécution global est plus lent.
+- Aucun code d’objet intermédiaire n’est généré, la mémoire est donc efficace.
+- Continue de traduire le programme jusqu’à ce que la première erreur soit rencontrée. Par conséquent, le débogage est facile.
+- Exemple d’interpréteur: Python, Ruby.
+
+Compilateur
+- Analyse l’ensemble du programme et le traduit dans son ensemble en code machine.
+- L’analyse du code source prend beaucoup de temps, mais le temps d’exécution global est comparativement plus rapide.
+- Génère du code d’objet intermédiaire qui nécessite en outre une liaison, nécessite donc davantage de mémoire.
+- Il génère le message d’erreur uniquement après avoir analysé l’ensemble du programme.
+- Par conséquent, le débogage est relativement difficile.
+- Exemple de compilateur: C, C++.
+
+###################################################################################
+OPTION DE gcc
+-E : Pour demander un arrêt de gcc après la phase de pré-processeur
+-c : On se situe juste avant la phase d'édition des liens. Un fichier d'extension .o (pour objet) sera produit.
+-o : renommer le fichier executable
+-Wall -Wextra : affiche tous les types de warnings.
+-g : pour compiler votre programme en mode « Debug » et ainsi pouvoir y faire du pas à pas
+###################################################################################
+
+Sizeof:
+taille de char : 1
+taille de short : 2
+taille de int : 4
+taille de long int : 8
+taille de long long int : 8
+taille de float : 4
+taille de double : 8
+taille de long double : 16
+unsigned char : 1
+unsigned short : 2
+unsigned int : 4
+unsigned long int : 8
+unsigned long long int : 8
+
+
+
+SIZEOF PTR:
+taille de int : 4
+taille de int *: 8
+taille de int ** : 8
+taille de char * : 8
+taille de char ** : 8
+taille de char *** : 8
+taille de float * : 8
+taille de float ** : 8
+taille de float *** : 8
+
+
+########################################################################################
+BUILD-IN FONCTIONS_UTILES
+
+COnnaitre la taille:
+- sizeof() ==> renvoi le nb d'octet d'une variable ou types
+
+- scanf("%", addrese_var);
+    %: correspondant au type de var prendre en compte les espaces => "%[^\n]"
+    addrese_var: &int,char,.. ou ptr
+
+- fgets(*destination, taille, fichier); fgets sur 'stdin' = scanf
+
+- memset(data, 0, sizeof(data));
+
+- sprintf(*destination, " format %", *source)
+
+- sscanf(*source, " format %", *destination)
+
+Bibliotheque <string.h>
+- strcpy(*destination, *source)
+- strcmp(*string1, *string2); renvoi 0 si egale
+- strlen(*string); ne prend pas en compte le caractere "\0"
+- memset( *string, int valeur, int taille)   memset(data, 0, sizeof(data));
+- strcat(*destination, *source)
+
+
+Bibliotheque stdlib.h
+- int = atoi(*source); convertion string en int
+########################################################################################
+
+fonctions utiles:
+
+decalage de n bits:
+int main()
+{
+    //On choisit le nombre à "analyser"
+    int chiffre = 1572847; //2097151
+    int vingt;
+    int quatre;
+
+    //Opérateurs de décalage de 20 bits et de 4 bits
+    vingt = chiffre >>20;
+    quatre = chiffre >>4;
+
+    //On teste si les 4° et 20° bits de *chiffre* sont bien à 1 et on affiche le résultat
+    if (vingt%2 == 1 && quatre % 2 == 1)
+    {
+        printf("Le 20° et le 4° bit du chiffre(%d) sont à 1",chiffre);
+    }
+    else
+    {
+        printf("les bits ne correspondent pas");
+    }
+    return 0;
+
+}
+
+-----------------------------------------------------------------------------------------------
+FIBONACCI
+int fibonacci()
+{
+    //On choisit la longueur de la suite à afficher
+    int longeur = 10;
+
+    //On initialise la suite
+    int u0 = 0;
+    int u1 = 1;
+    int temp;
+
+    printf("Suite de fibonacci:\n%d\t%d\t ", u0, u1);
+
+    //On lance le calcul et l'impression des différents termes
+    for (int i = 2; i < longeur; i++)
+    {
+
+        temp = u1;
+        u1 += u0 ;
+        u0 = temp ;
+        printf("%d\t", u1);
+    }
+    printf("\n");
+    return 0;
+
+}
+
+FACTORIELLE
+int factorielle(int num)
+{
+    if(num == 0)
+    {
+        return 1;
+    }
+    else
+    {
+        return (num * factorielle(num - 1));
+    }
+}
+------------------------------------------------------------------------------------
+CONNAITRE LA COMPOSITION DES OCTETS D'UNE VARIANLE
+int main()
+{
+    /* instantiation des variables et pointeurs */
+    short var_short = 176;
+    char* point_Short = (char*)&var_short;
+
+    int var_int = 824612;
+    char* point_Int = (char*)&var_int;
+
+    long int var_long_int = 4919138989213764;
+    char* point_Long_Int = (char*)&var_long_int;
+
+    float var_float = 23;
+    char* point_Float = (char*)&var_float;
+
+    double var_double = 14;
+    char* point_Double = (char*)&var_double;
+
+    long double var_long_double = 49;
+    char* point_Long_Double = (char*)&var_long_double;
+
+    /* affichages des octet pour chaque type */
+    for(int i=0; i<sizeof(var_short); i++){
+        printf("L'octet n° %d du short est : %x\n",i+1, *(point_Short+i) );
+    }
+    printf("\n");
+    ...
+}
+
+---------------------------------------------------------------------------------------
+ALGORITHMES DE TRI
+/* Dans cete fonction de tri nous faisons 2 boucle sur tout le tableau et echangons les valeurs au fur et mesure */
+void triBasic(int *ptr_tab, int size)
+{
+    int temp;
+    for(int i = 0; i < size; i++)
+    {
+        for( int j = 0; j < 100; j++)
+        {
+            if (*(ptr_tab + i) < *(ptr_tab + j) )
+            {
+                temp = *(ptr_tab + i);
+                *(ptr_tab + i) = *(ptr_tab + j);
+                *(ptr_tab + j) = temp;
+            }
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/* Le tri se fait a l'aide d'une boucle i qui parcourt 1 fois le tableau, et d'un boucle j qui parcourt plusiseurs
+fois le tableau entre i et la fin et comprare la valeur en i et celle en j pour echanger si besoin */
+void triPlus(int *ptr_tab, int size)
+{
+    int temp;
+    for(int i = 0; i < size; i++)
+    {
+        for( int j = i; j < 100; j++)
+        {
+            if (*(ptr_tab + i) > *(ptr_tab + j) )
+            {
+                temp = *(ptr_tab + i);
+                *(ptr_tab + i) = *(ptr_tab + j);
+                *(ptr_tab + j) = temp;
+            }
+        }
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+/*  tri en utilisant les fonction min et max, a chaque tour de boucle nous trouvons le min et max du tableau
+et le placons respt au debut et a la fin du tableau et recommencons avec un tableau "plus petit" */
+void triTop(int *ptr_debut, int size)
+{
+    int *ptr_fin = ptr_debut + size;
+    int temp_min;
+    int temp_max;
+    int *ptr_min;
+    int *ptr_max;
+    for(int i = 0; i < size; i++)
+    {
+        if (ptr_debut < ptr_fin)
+        {
+            temp_min = *ptr_debut;
+            ptr_min = pmin(ptr_debut, size-i );
+            *ptr_debut = *ptr_min;
+            *ptr_min = temp_min;
+
+
+            temp_max = *(ptr_fin);
+            ptr_max = pmax(ptr_debut, size - i );
+            *(ptr_fin) = *ptr_max;
+            *ptr_max = temp_max;
+
+            ptr_debut++;
+        }
+        else
+        {
+            break;
+        }
+    }
+}
+
+########################################################################################"
+
+VIDER LE BUFFER SCANF
+
+void emptybuff()
+/*
+fonction permettant de vider le buffer entre 2 scanf
+*/
+{
+    int c;
+    while((c = getchar()) != '\n' && c !=EOF){ }
+}
+
+MANIPULATION DE FICHIER:
+
+LECTURE
+void lire_fichier(char *nom_fichier)
+/*
+fonction de lecture de fichier
+*/
+{
+    char content[100];
+    int fd, size;
+
+    fd = open(nom_fichier, O_RDONLY);
+
+    if (fd < 0)
+    // on verifie que le fichier a bien ete ouvert
+    {
+        printf("Erreur impossible d'acceder au fichier \"%s\"\n", nom_fichier);
+        close(fd);
+        exit(0);
+    }
+    while(1)
+    {
+        // on lit caractere par caractere dans le fichier avant de les afficher
+        size = read(fd, content, 1);
+        if (size < 1 )
+        {
+            break;
+        }
+        printf("%s", content);
+    }
+    printf("\n");
+    close(fd);
+
+}
+
+
+ECRITURE
+void ecrire_dans_fichier(char *nom_fichier, char *message)
+/*
+fonction d'ecriture
+*/
+{
+    int fd, count, size;
+    fd = open (nom_fichier, O_CREAT|O_WRONLY|O_APPEND, S_IRUSR|S_IWUSR);
+    size = write(fd, message, strlen(message));
+    close(fd);
+}
+
+COMPTER NB LIGNES DANS LE FICHIER
+int wc_maison(char *nom_fichier)
+/*
+fonction qui compte le nombre de ligne dans le fichier en comptant le nombre de \n presents
+*/
+{
+    char content[100];
+    int fd, size, compteur = 0;
+
+    fd = open(nom_fichier, O_RDONLY);
+    if (fd < 0)
+    {
+        printf("Erreur impossible d'acceder au fichier \"%s\"\n", nom_fichier);
+        exit(0);
+    }
+    while(1)
+    {
+        size = read(fd, content, 1);
+        if (size < 1 )
+        {
+            break;
+        }
+        else if (strncmp(content, "\n", 2)==0)
+        {
+            compteur++;
+        }
+
+    }
+    close(fd);
+    return compteur;
+}
+
+#########################################################################################
+MANIPULATION DE DOSSIERS
+
+LIRE 1 DOSSIER
+void lire_dossier(char *nom_dossier)
+{
+    DIR *dirp = opendir(nom_dossier); //On ouvre le dossier passé en argument
+
+    //On vérifie que le dossier existe
+    if (dirp == NULL)
+    {
+        perror("Nom de dossier invalide");
+        exit(EXIT_FAILURE);
+    }
+
+    struct dirent * element;
+    int nb_fichiers = 0;
+
+    while(1)
+    {
+        element = readdir(dirp);
+        if (element == NULL)
+        {
+            break;
+        }
+        if( (strcmp(element->d_name, ".") != 0) && (strcmp(element->d_name, "..") != 0)) //On vérifie que l'élément n'est pas le dossier"." ou "."
+        {
+            nb_fichiers++;
+            printf("Element %3d: %s\n", nb_fichiers, element->d_name); //On affiche le nom de l'élément
+        }
+    }
+
+    closedir(dirp);
+}
+
+PARCOURT VERSION RECUSIVE
+void lire_dossier_recursif(char *nom_dossier, int niveau) {
+
+    DIR *dirp = opendir(nom_dossier); //On ouvre le dossier passé en argument
+
+    //On vérifie que le dossier existe
+    if (dirp == NULL) {
+        perror("Nom de dossier invalide");
+        exit(EXIT_FAILURE);
+    }
+
+    struct dirent * element;
+    int nb_elements = 0;
+
+    while(1) {
+        element = readdir(dirp);
+        if (element == NULL) {
+            break;
+        }
+        if( (strcmp(element->d_name, ".") != 0) && (strcmp(element->d_name, "..") != 0)) //On vérifie que l'élément n'est pas le dossier"." ou "."
+        {
+            //On gère l'indentation : à chaque niveau, on ajoute une tabulation
+            nb_elements++;
+            char indentation[20];
+            indentation[0] = '\0';
+            for (int compteur = 0; compteur < niveau; compteur++ ) {
+                strcat(indentation, "\t");
+            }
+
+            //En fonction du type d'élément présent dans le dossier, on adapte le traitement
+            switch (element->d_type){
+
+            //Cas où l'élément est un dossier
+            case DT_DIR:
+
+                printf("%sdossier: %s\n", indentation, element->d_name);
+                int longueur_nom = strlen(element->d_name) + strlen(nom_dossier) + 2; //On calcule la taille de mémoire à allouer
+                int *ptr_nom_dossier = malloc(longueur_nom); //On alloue la mémoire
+                strcat(nom_dossier, "/"); //On crée le chemin complet du dossier à ouvrir
+                strcat(nom_dossier, element->d_name);
+                lire_dossier_recursif(nom_dossier, niveau+1); //On appelle la fonction de manière récursive avec le nom du dossier en argument
+                break;
+
+            //Cas où l'élément est un fichier
+            case DT_REG:
+                printf("%sfichier: %s\n", indentation, element->d_name);
+                break;
+
+            default:
+                printf("%sinconnu: %s\n", indentation, element->d_name);
+            }
+        }
+    }
+}
+
+
+
+#########################################################################################
+
+MANIPULATION DE LINKED LISTE:
+
+Insertion
+void insertion (struct couleur *nouveau, struct Liste_couleurs *liste_couleurs)
+// fonction d'insertion, entre le premier et le second element
+{
+    nouveau->next = liste_couleurs->first->next;
+    liste_couleurs->first->next = nouveau;
+}
+
+PARCOURT
+void parcours (struct Liste_couleurs *liste_couleurs)
+// fonction de parcours de la liste et affichage des elements
+{
+    struct couleur *couleur = liste_couleurs->first;
+    while(1) { //navigation
+        printf( "couleur: (%d, %d, %d, %d)\n", couleur->R, couleur->G, couleur->B, couleur->A);
+
+        if (couleur->next == NULL)
+        {
+            break;
+        }
+        couleur = couleur->next; //couleur suivante
+    }
+}
+
+
+##############################################################################"##
+MAKEFILE
+
+CC ?= gcc
+
+COBJS ?= client.o bmp.o couleur.o
+SOBJS ?= serveur.o
+
+.SUFFIXES: .c .o
+
+SERVER = serveur
+CLIENT = client
+
+all: $(SERVER) $(CLIENT)
+
+$(SERVER): $(SOBJS)
+	$(CC) -o $(SERVER) $(SOBJS)
+
+$(CLIENT): $(COBJS)
+	$(CC) -o $(CLIENT) $(COBJS)
+
+.c.o:
+	$(CC) -c $*.c
+
+
