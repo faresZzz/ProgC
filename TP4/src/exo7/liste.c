@@ -28,6 +28,7 @@ struct Liste_couleurs {
 void insertion (struct couleur *nouveau, struct Liste_couleurs *liste_couleurs)
 // fonction d'insertion, entre le premier et le second element
 {
+    
     nouveau->next = liste_couleurs->first->next;
     liste_couleurs->first->next = nouveau;
 }
@@ -45,6 +46,7 @@ void parcours (struct Liste_couleurs *liste_couleurs)
         }
         couleur = couleur->next; //couleur suivante
     }
+
 }
 
 

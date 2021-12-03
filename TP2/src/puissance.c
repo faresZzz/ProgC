@@ -20,7 +20,7 @@ int main()
 {
     //On initialise les variables
     int a = 2; 
-    int b = 7;
+    int b = 3;
     
     //On cacule a à la puissance b et on affiche le résultat
     printf("%d^%d = %d\n", a, b, puiss(a,b));
